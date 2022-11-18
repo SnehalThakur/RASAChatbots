@@ -1,0 +1,63 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- goodbye
+- affirm
+- deny
+- mood_great
+- mood_unhappy
+- bot_challenge
+- welcome_bot
+- hospital
+- ngo
+- doctor
+- patient
+- doctor_signup
+- doctor_signin
+- patient_signup
+- patient_signin
+
+entities:
+  - content_type
+
+slot:
+  content_type:
+    type: text
+
+responses:
+  utter_greet:
+  - text: Hey! How are you?
+  utter_cheer_up:
+  - image: https://i.imgur.com/nGF1K8f.jpg
+    text: 'Here is something to cheer you up:'
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_happy:
+  - text: Great, carry on!
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_welcome_bot:
+  - text: Hey! I am a PetoCare 🤖 Bot. How can I help you?
+  utter_hospital_options:
+    - text: Are you a Doctor or a Patient?
+  utter_ngo_options:
+    - text: Who are you?
+  utter_doctor_options:
+    - text: Signup for Doctor registration and Signin if you are already registered?
+  utter_patient_options:
+    - text: Signup for Patient registration and Signin if you are already registered?
+  utter_ask_name:
+    - text: What is your name ?
+  utter_ask_registration_number:
+    - text: What is your registration_number ?
+
+actions:
+- find_welcome_petocare_facility_types
+- find_hospital_options
+- find_doctor_options
+- find_patient_options

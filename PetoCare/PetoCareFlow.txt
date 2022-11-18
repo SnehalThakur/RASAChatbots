@@ -1,0 +1,244 @@
+Welcome Flow
+----------------
+B - Hey! I am a PetoCare Bot. How can I help you?
+	- Hospital
+	- Pet Shop (Service isn't available)
+	- NGO 
+(User will select Hospital/ Pet Shop/ NGO from above options)
+
+Hospital
+------------------------------------------------------
+------------------------------------------------------
+B - Are you a Doctor or a Patient?
+	- Doctor
+	- Patient
+(User will select Doctor or Patient from above options)
+-------------- Doctor Flow ------------------------
+(User have entered Doctor)
+B - Signup (New Doctor)
+  - Signin (Already registered Doctor)
+
+(User have entered Signup)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+B - Enter your medical registration number?
+U - .........
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	Medical Registration number - ..........
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Yes)
+B - You have been successfully registered. Your registrationId is .......
+	Kindly note it for future reference.
+
+(User have entered No)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+B - Enter your medical registration number?
+U - .........
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	Medical Registration number - ..........
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Signin)
+B - Enter your regitrationId?
+U - .........
+B - Welcome Dr. ........ 
+    How can I help you?
+
+------------ Patient Flow -----------------
+(User have entered Patient)
+B - Signup (New Patient)
+  - Signin (Already registered Patient)
+
+(User have entered Signup)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Yes)
+B - You have been successfully registered. Your registrationId is .......
+	Kindly note it for future reference.
+
+(User have entered No)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Signin)
+B - Enter your regitrationId?
+U - .........
+B - Welcome Mr. ........ 
+    How can I help you?
+	- Book an Appointment ?
+B - Calender Date
+U - (User will select date)
+B - (Timing buttons)
+B - Kindly Confirm your date and time? (Show date and time)
+	- Yes
+	- No
+B - Calender (Date)
+U - (User will select date)
+B - (Timing buttons)
+B - Kindly Confirm your date and time? (Show date and time)
+	- Yes
+	- No
+B - Your slot is booked. Your booking id - ............
+	(Notify Patient and Doctor)
+
+----------------------------------------------------------
+-----------------------------------------------------------
+
+Pet Shop
+----------------
+
+NGO
+--------------
+B - Who are you?
+	- NGO
+	- PetoCare user
+(User will select NGO or User from above options)
+-------------- NGO Flow ------------------------
+(User have entered NGO)
+B - Signup (New NGO)
+  - Signin (Already registered NGO)
+
+(User have entered Signup)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+B - Enter your NGO registration number?
+U - .........
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	NGO registration number - ..............
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Yes)
+B - You have been successfully registered. Your registrationId is .......
+	Kindly note it for future reference.
+
+(User have entered No)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+B - Enter your NGO registration number?
+U - .........
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	NGO registration number - ..............
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Signin)
+B - Enter your regitrationId?
+U - .........
+B - Welcome Mr. ........ 
+    How can I help you?
+
+
+------------ User Flow -----------------
+(User have entered User)
+B - Signup (New User)
+  - Signin (Already registered User)
+
+(User have entered Signup)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Yes)
+B - You have been successfully registered. Your registrationId is .......
+	Kindly note it for future reference.
+
+(User have entered No)
+B - Enter your full name?
+U - .........
+B - Enter your contact number?
+U - .........
+B - Enter your address?
+U - .........
+B - Your name is ........
+    Contact Number - .........
+	Email - ..........
+	Kindly Confirm?
+	- Yes
+	- No
+
+(User have entered Signin)
+B - Enter your regitrationId?
+U - .........
+B - Welcome Mr. ........ 
+    How can I help you?
+	- Book an Appointment ?
+	- Helpline number
+B - Calender Date
+U - (User will select date)
+B - (Timing buttons)
+B - Kindly Confirm your date and time? (Show date and time)
+	- Yes
+	- No
+B - Calender (Date)
+U - (User will select date)
+B - (Timing buttons)
+B - Kindly Confirm your date and time? (Show date and time)
+	- Yes
+	- No
+B - Your slot is booked. Your booking id - ............
+	(Notify Patient and Doctor)

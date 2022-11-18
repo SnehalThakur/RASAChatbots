@@ -1,0 +1,91 @@
+version: "2.0"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: find_welcome_petocare_facility_types
+
+#- story: welcome path
+#  steps:
+#  - intent: welcome_bot
+#  - action: find_welcome_facility_types
+
+- story: hospital flow
+  steps:
+  - intent: hospital
+    entities:
+      - content_type: "hospital"
+  - slot_was_set:
+      - content_type: "hospital"
+  - action: find_hospital_options
+  - intent: doctor
+    entities:
+      - content_type: "doctor"
+  - slot_was_set:
+      - content_type: "doctor"
+  - action: find_doctor_options
+
+
+- story: doctor flow
+  steps:
+  - intent: doctor
+  - action: find_doctor_options
+  - intent: doctor_signup
+    entities:
+      - content_type: "doctor_signup"
+  - slot_was_set:
+      - content_type: "doctor_signup"
+  - action: utter_ask_name
+  - intent: doctor_signin
+    entities:
+      - content_type: "doctor_signin"
+  - slot_was_set:
+      - content_type: "doctor_signin"
+  - action: utter_ask_registration_number
+
+- story: patient flow
+  steps:
+  - intent: patient
+  - action: find_patient_options
+  - intent: patient_signup
+    entities:
+      - content_type: "patient_signup"
+  - slot_was_set:
+      - content_type: "patient_signup"
+  - action: utter_ask_name
+  - intent: patient_signin
+    entities:
+      - content_type: "patient_signin"
+  - slot_was_set:
+      - content_type: "patient_signin"
+  - action: utter_ask_registration_number
+
+- story: ngo flow
+  steps:
+  - intent: ngo
+    entities:
+      - content_type: "ngo"
+  - slot_was_set:
+      - content_type: "ngo"
+  - action: utter_ngo_options
+
+#- story: doctor flow
+#  steps:
+#  - intent: hospital
+#    entities:
+#      - content_type: "hospital"
+#  - slot_was_set:
+#      - content_type: "hospital"
+#  - action: utter_hospital_options
+#  - action: find_hospital_options
+#
+#- story: patient flow
+#  steps:
+#  - intent: ngo
+#    entities:
+#      - content_type: "ngo"
+#  - slot_was_set:
+#      - content_type: "ngo"
+#  - action: utter_ngo_options
