@@ -7,10 +7,36 @@ stories:
   - intent: greet
   - action: find_welcome_petocare_facility_types
 
-#- story: welcome path
-#  steps:
-#  - intent: welcome_bot
-#  - action: find_welcome_facility_types
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: find_welcome_petocare_facility_types
+  - intent: hospital
+    entities:
+    - content_type: hospital
+  - slot_was_set:
+    - content_type: hospital
+  - action: find_hospital_options
+  - intent: patient
+    entities:
+      - content_type: patient
+  - slot_was_set:
+      - content_type: patient
+  - action: find_patient_options
+#  - intent: doctor_signup
+#    entities:
+#      - content_type: "doctor_signup"
+#  - slot_was_set:
+#      - content_type: "doctor_signup"
+#  - action: doctor_details_form
+#  - action: utter_doctor_details_thanks
+#  - intent: doctor_signin
+#    entities:
+#      - content_type: "doctor_signin"
+#  - slot_was_set:
+#      - content_type: "doctor_signin"
+#  - action: utter_ask_email
+#  - intent: stop
 
 - story: hospital flow
   steps:
@@ -26,62 +52,89 @@ stories:
   - slot_was_set:
       - content_type: "doctor"
   - action: find_doctor_options
+  - intent: patient
+    entities:
+      - content_type: "patient"
+  - slot_was_set:
+      - content_type: "patient"
+  - action: find_patient_options
 
 
-- story: doctor flow
+#- story: doctor flow
+- story: doctor signup flow
   steps:
-  - intent: doctor
-  - action: find_doctor_options
   - intent: doctor_signup
     entities:
       - content_type: "doctor_signup"
   - slot_was_set:
       - content_type: "doctor_signup"
-  - action: utter_ask_name
+  - action: doctor_details_form
+  - slot_was_set:
+      - name: Sonu
+      - number: 9987654321
+      - password: 9876567899999876
+      - address: Nagpur
+      - email: st@gmail.com
+
+  - active_loop: doctor_details_form
+  - action: utter_doctor_details_thanks
+  - action: save_doctor_data
+  - action: action_reset_all_slots
+
+#- story: patient flow
+#  steps:
+- story: doctor signin flow
+  steps:
   - intent: doctor_signin
     entities:
       - content_type: "doctor_signin"
   - slot_was_set:
       - content_type: "doctor_signin"
-  - action: utter_ask_registration_number
-
-- story: patient flow
+  - action: utter_ask_email
+  - action: retrieve_doctor_data
+#  - active_loop: doctor_details_form
+#  - action: utter_ask_more_help
+#  - active_loop: null
+#  - action: utter_details_thanks
+#
+#- story: patient flow
+#  steps:
+#  - intent: patient
+#  - action: find_patient_options
+- story: patient signup flow
   steps:
-  - intent: patient
-  - action: find_patient_options
   - intent: patient_signup
     entities:
       - content_type: "patient_signup"
   - slot_was_set:
       - content_type: "patient_signup"
-  - action: utter_ask_name
+  - action: patient_details_form
+  - active_loop: patient_details_form
+  - action: utter_patient_details_thanks
+  - action: save_patient_data
+  - action: action_reset_all_slots
+#  - active_loop: null
+#  - slot_was_set:
+#    - requested_slot: null
+- story: patient signin flow
+  steps:
   - intent: patient_signin
     entities:
       - content_type: "patient_signin"
   - slot_was_set:
       - content_type: "patient_signin"
-  - action: utter_ask_registration_number
+  - action: utter_ask_email
+  - action: retrieve_patient_data
 
-- story: ngo flow
+
+- story: Appointment Book
   steps:
-  - intent: ngo
-    entities:
-      - content_type: "ngo"
-  - slot_was_set:
-      - content_type: "ngo"
-  - action: utter_ngo_options
-
-#- story: doctor flow
-#  steps:
-#  - intent: hospital
-#    entities:
-#      - content_type: "hospital"
-#  - slot_was_set:
-#      - content_type: "hospital"
-#  - action: utter_hospital_options
-#  - action: find_hospital_options
+  - intent: appointment_booking
+  - action: utter_ask_location
+  - intent: patient_location
+  - action:
 #
-#- story: patient flow
+#- story: ngo flow
 #  steps:
 #  - intent: ngo
 #    entities:
@@ -89,3 +142,81 @@ stories:
 #  - slot_was_set:
 #      - content_type: "ngo"
 #  - action: utter_ngo_options
+#
+##- story: doctor flow
+##  steps:
+##  - intent: hospital
+##    entities:
+##      - content_type: "hospital"
+##  - slot_was_set:
+##      - content_type: "hospital"
+##  - action: utter_hospital_options
+##  - action: find_hospital_options
+##
+##- story: patient flow
+##  steps:
+##  - intent: ngo
+##    entities:
+##      - content_type: "ngo"
+##  - slot_was_set:
+##      - content_type: "ngo"
+##  - action: utter_ngo_options
+#
+##- story: interactive_story_1
+##  steps:
+##  - intent: greet
+##  - action: find_welcome_petocare_facility_types
+##  - intent: hospital
+##    entities:
+##    - content_type: hospital
+##  - slot_was_set:
+##    - content_type: hospital
+##  - action: find_hospital_options
+##  - intent: patient
+##    entities:
+##    - content_type: patient
+##  - slot_was_set:
+##    - content_type: patient
+##  - action: patient_details_form
+##  - active_loop: patient_details_form
+##  - slot_was_set:
+##    - requested_slot: name
+##  - slot_was_set:
+##    - name: sonu
+##  - slot_was_set:
+##    - requested_slot: number
+##  - slot_was_set:
+##    - number: '9970533440'
+##  - slot_was_set:
+#
+#- story: interactive_story_2
+#  steps:
+#  - intent: greet
+#  - action: find_welcome_petocare_facility_types
+#  - intent: hospital
+#    entities:
+#    - content_type: hospital
+#  - slot_was_set:
+#    - content_type: hospital
+#  - action: find_hospital_options
+#  - intent: patient
+#    entities:
+#    - content_type: patient
+#  - slot_was_set:
+#    - content_type: patient
+#  - action: patient_details_form
+#  - active_loop: patient_details_form
+#  - slot_was_set:
+#    - requested_slot: name
+#  - slot_was_set:
+#    - requested_slot: number
+#  - slot_was_set:
+#    - requested_slot: password
+#  - slot_was_set:
+#    - requested_slot: address
+#  - slot_was_set:
+#    - requested_slot: email
+#  - action: utter_patient_details_thanks
+
+
+

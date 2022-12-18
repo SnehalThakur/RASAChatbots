@@ -1,3 +1,15 @@
+Open 3 terminals
+
+(pip install pyngrok)
+To start ngrok server :
+    ngrok http 5005
+
+To start action server :
+    rasa run actions
+
+TO start rasa :
+    rasa run --enable-api --cors "*"
+
 Welcome Flow
 ----------------
 B - Hey! I am a PetoCare Bot. How can I help you?

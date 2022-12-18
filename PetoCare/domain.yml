@@ -4,6 +4,13 @@ session_config:
   carry_over_slots_to_new_session: true
 intents:
 - greet
+- patient
+- password
+- mobile_number
+- stop
+- hospital
+- name
+- address
 - goodbye
 - affirm
 - deny
@@ -11,22 +18,50 @@ intents:
 - mood_unhappy
 - bot_challenge
 - welcome_bot
-- hospital
 - ngo
 - doctor
-- patient
 - doctor_signup
 - doctor_signin
 - patient_signup
 - patient_signin
-
+- petcare_user
+- tell_name
+- email
+- appointment_booking
+- patient_location
 entities:
-  - content_type
-
-slot:
+- address
+- content_type
+- medical_registration_number
+- number
+- name
+- password
+- email
+slots:
   content_type:
     type: text
-
+    influence_conversation: true
+  name:
+    type: text
+    influence_conversation: true
+  password:
+    type: text
+    influence_conversation: true
+  number:
+    type: text
+    influence_conversation: true
+  address:
+    type: text
+    influence_conversation: true
+  email:
+    type: text
+    influence_conversation: true
+  medical_registration_number:
+    type: text
+    influence_conversation: true
+  location:
+    type: text
+    influence_conversation: true
 responses:
   utter_greet:
   - text: Hey! How are you?
@@ -35,29 +70,111 @@ responses:
     text: 'Here is something to cheer you up:'
   utter_did_that_help:
   - text: Did that help you?
+  utter_ask_more_help:
+  - text: Do you need more help?
   utter_happy:
   - text: Great, carry on!
   utter_goodbye:
+  - text: Bye
+  utter_bye:
   - text: Bye
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_welcome_bot:
   - text: Hey! I am a PetoCare 🤖 Bot. How can I help you?
   utter_hospital_options:
-    - text: Are you a Doctor or a Patient?
+  - text: Are you a Doctor or a Patient?
   utter_ngo_options:
-    - text: Who are you?
+  - text: Who are you?
   utter_doctor_options:
-    - text: Signup for Doctor registration and Signin if you are already registered?
+  - text: Signup for Doctor registration and Signin if you are already registered?
   utter_patient_options:
-    - text: Signup for Patient registration and Signin if you are already registered?
+  - text: Signup for Patient registration and Signin if you are already registered?
   utter_ask_name:
-    - text: What is your name ?
+  - text: What is your name ?
+  utter_ask_number:
+  - text: What is your mobile number ?
+  utter_ask_address:
+  - text: Enter your address ?
+  utter_ask_email:
+  - text: Enter your email ?
+  utter_ask_patient_registration_number:
+  - text: What is patient registration number ?
   utter_ask_registration_number:
-    - text: What is your registration_number ?
-
+  - text: What is registration number ?
+  utter_ask_doctor_registration_number:
+  - text: What is doctor registration_number ?
+  utter_ask_password:
+  - text: Enter new password ?
+  utter_ask_ngo_registration_number:
+  - text: What is ngo registration number ?
+  utter_ask_petcare_registration_number:
+  - text: What is petcare registration number ?
+  utter_ask_medical_registration_number:
+  - text: What is your medical registration_number ?
+  utter_name:
+  - text: My name is Innovate Yourself.
+  utter_thanks:
+  - text: Thanks for providing the values.
+  utter_patient_details_thanks:
+  - text: |-
+      Thanks for providing the given details 
+      Name: {name},
+      Password: {password},
+      Mobile Number: {number},
+      Address: {address},
+      Email: {email}
+  utter_doctor_details_thanks:
+  - text: |-
+      Thanks for providing the given details 
+      Name: {name},
+      Password: {password},
+      Mobile Number: {number},
+      Address: {address},
+      Email: {email},
+      MedicalRegistrationNumber: {medical_registration_number}
+  utter_out_of_scope:
+  - text: Sorry, I didn't get what you said. Please rephrase what you said.
+  utter_ask_location:
+  - text: Please tell the location where you want to book an appointment.
+  utter_ask_affirm:
+  - text: Do you want to confirm your booking?
 actions:
-- find_welcome_petocare_facility_types
-- find_hospital_options
+- action_user_submit
 - find_doctor_options
+- find_hospital_options
+- find_ngo_options
 - find_patient_options
+- find_welcome_petocare_facility_types
+- action_reset_all_slots
+- save_doctor_data
+- save_patient_data
+- retrieve_doctor_data
+- retrieve_patient_data
+forms:
+  patient_details_form:
+    required_slots:
+      name:
+      - type: from_text
+      number:
+      - type: from_text
+      password:
+      - type: from_text
+      address:
+      - type: from_text
+      email:
+      - type: from_text
+  doctor_details_form:
+    required_slots:
+      name:
+      - type: from_text
+      number:
+      - type: from_text
+      password:
+      - type: from_text
+      address:
+      - type: from_text
+      email:
+      - type: from_text
+      medical_registration_number:
+      - type: from_text

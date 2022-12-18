@@ -1,5 +1,4 @@
 version: "2.0"
-
 nlu:
 - intent: greet
   examples: |
@@ -16,7 +15,6 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
-
 - intent: goodbye
   examples: |
     - good afternoon
@@ -30,7 +28,7 @@ nlu:
     - see you around
     - bye bye
     - see you later
-
+    - 99705ccdd0
 - intent: affirm
   examples: |
     - yes
@@ -39,7 +37,6 @@ nlu:
     - of course
     - that sounds good
     - correct
-
 - intent: deny
   examples: |
     - no
@@ -49,7 +46,6 @@ nlu:
     - don't like that
     - no way
     - not really
-
 - intent: mood_great
   examples: |
     - perfect
@@ -66,7 +62,6 @@ nlu:
     - so so perfect
     - so good
     - so perfect
-
 - intent: mood_unhappy
   examples: |
     - my day was horrible
@@ -83,58 +78,100 @@ nlu:
     - extremly sad
     - so saad
     - so sad
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
-
 - intent: welcome_bot
   examples: |
     - welcome bot
     - welcome_bot
-
 - intent: hospital
   examples: |
-    - I want [hospital]{"entity": "content_type"}
-    - I want to know about [hospital]{"entity": "content_type"}
-
+    - I want [hospital](content_type)
+    - I want to know about [hospital](content_type)
 - intent: ngo
   examples: |
-    - I want [ngo]{"entity": "content_type"}
-    - I want to know about [ngo]{"entity": "content_type"}
-
+    - I want [ngo](content_type)
+    - I want to know about [ngo](content_type)
 - intent: doctor
   examples: |
-    - I am a [doctor]{"entity": "content_type"}
-    - I am [doctor]{"entity": "content_type"}
-    - [doctor]{"entity": "content_type"}
-
+    - I am a [doctor](content_type)
+    - I am [doctor](content_type)
+    - [doctor](content_type)
 - intent: patient
   examples: |
-    - I am [patient]{"entity": "content_type"}
-    - I am a [patient]{"entity": "content_type"}
-    - [patient]{"entity": "content_type"}
-
+    - I am [patient](content_type)
+    - I am a [patient](content_type)
+    - [patient](content_type)
 - intent: doctor_signup
   examples: |
-    - [doctor_signup]{"entity": "content_type"}
-
+    - [doctor_signup](content_type)
 - intent: doctor_signin
   examples: |
-    - [doctor_signin]{"entity": "content_type"}
-
+    - [doctor_signin](content_type)
 - intent: patient_signup
   examples: |
-    - [patient_signup]{"entity": "content_type"}
-
+    - [patient_signup](content_type)
 - intent: patient_signin
   examples: |
-    - [patient_signin]{"entity": "content_type"}
-
+    - [patient_signin](content_type)
 - intent: petcare_user
   examples: |
-    - I am [petcare_user]{"entity": "content_type"}
-    - [petcare_user]{"entity": "content_type"}
+    - I am [petcare_user](content_type)
+    - [petcare_user](content_type)
+- intent: tell_name
+  examples: |
+    - what is your name?
+    - tell me your name?
+    - what should I call you?
+- intent: name
+  examples: |
+    - My name is [vaishnavi](name)
+    - [Vaishnavi](name)
+    - [Vaishnavi](name) is my name
+    - My name is [ishita](name)
+    - My name is [isha](name)
+    - People call me [Vaishnavi](name)
+    - sonu
+    - Sonu
+- intent: mobile_number
+  examples: |
+    - my number is [8530695473](number)
+    - [8530426407](number)
+    - my mobile number is [8669416075](number)
+    - [9421887656](number) is my number
+    - [9970533440](number)
+- intent: password
+  examples: |
+    - [99705ccdd0](password)
+    - My password is [99705ccdd0](password)
+    - password [99705ccdd0](password)
+    - [9970CCDD0](password)
+- intent: address
+  examples: |
+    - I live in [Nagpur](address)
+    - [Nagpur](address)
+    - [Manewada](address)
+    - [Hingna](address)
+    - [Nagpur](address)
+- intent: email
+  examples: |
+    - my email id is [thakurvaishnavi@gmail.com](email)
+    - [vaishnavithakur@gmail.com](email)
+- intent: appointment_booking
+  examples: |
+    - I want to book an appointment
+    - I want an appointment
+    - I want appointment
+    - I want doctor appointment
+    - I want doctor's appointment
+- intent: patient_location
+  examples: |
+    - I want to book in [Manewada](location)
+    - I want to book in [Medical Square](location)
+    - I want to book in [Hingna](location)
+    - I want to book in [T-Point](location)
+    - I want to book in [Ambazari](location)

@@ -4,28 +4,12 @@
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
 
-
-# This is a simple example for a custom action which utters "Hello World!"
-
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
+from rasa_sdk.events import SlotSet, EventType, AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
-
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
+import utils.SQLiteDB as dbloader
 
 FACILITY_TYPES = {
     "hospital":
@@ -60,7 +44,7 @@ class FindFacilityTypes(Action):
             dispatcher: "CollectingDispatcher",
             tracker: Tracker,
             domain: "DomainDict") -> List[Dict[Text, Any]]:
-        buttons=[
+        buttons = [
             {'payload': '/hospital{"content_type":"hospital"}', 'title': 'Hospital'},
             {'payload': '/ngo{"content_type":"ngo"}', 'title': 'NGO'}
             # ,{'payload': '/petshop{"content_type":"petshop"}', 'title': "Pet Shop (Service isn't available)"}
@@ -136,8 +120,30 @@ class FindPatientOptions(Action):
         ]
 
         # TODO: update rasa core version for configurable `button_type`
-        dispatcher.utter_button_template("utter_patient_options",buttons, tracker)
+        dispatcher.utter_button_template("utter_patient_options", buttons, tracker)
         return []
+
+
+# class FindPetoCareOptions(Action):
+#     """ This action class allows to display buttons for patient signup and signin options """
+#
+#     def name(self) -> Text:
+#         """Unique identifier of the action"""
+#         return "find_patient_options"
+#
+#     def run(
+#             self,
+#             dispatcher: "CollectingDispatcher",
+#             tracker: Tracker,
+#             domain: "DomainDict") -> List[Dict[Text, Any]]:
+#         buttons = [
+#             {'payload': '/patient_signup{"content_type":"patient_signup"}', 'title': 'Patient Signup'},
+#             {'payload': '/patient_signin{"content_type":"patient_signin"}', 'title': 'Patient Signin'}
+#         ]
+#
+#         # TODO: update rasa core version for configurable `button_type`
+#         dispatcher.utter_button_template("Patient Login Options",buttons, tracker)
+#         return []
 
 
 class FindNGOOptions(Action):
@@ -146,7 +152,7 @@ class FindNGOOptions(Action):
 
     def name(self) -> Text:
         """Unique identifier of the action"""
-        return "find_doctor_options"
+        return "find_ngo_options"
 
     def run(
             self,
@@ -159,32 +165,150 @@ class FindNGOOptions(Action):
         ]
 
         # TODO: update rasa core version for configurable `button_type`
-        dispatcher.utter_button_template("utter_ngo_options",buttons, tracker)
+        dispatcher.utter_button_template("utter_ngo_options", buttons, tracker)
         return []
 
 
-class FindPetoCareOptions(Action):
-    """
-    This action class allows to display buttons for patient signup and signin options"""
+# class ValidateRegistrationForm(Action):
+#     """ This action class allows to validate registration form"""
+#
+#     def name(self) -> Text:
+#         return "user_details_form"
+#
+#     def run(
+#         self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict
+#     ) -> List[EventType]:
+#         required_slots = ["name", "number","address","email"]
+#
+#         for slot_name in required_slots:
+#             if tracker.slots.get(slot_name) is None:
+#                 # The slot is not filled yet. Request the user to fill this slot next.
+#                 return [SlotSet("requested_slot", slot_name)]
+#
+#         # All slots are filled.
+#         return [SlotSet("requested_slot", None)]
+#
+#
+# class ActionSubmit(Action):
+#     """ This action class allows to display buttons for patient signup and signin options"""
+#
+#     def name(self) -> Text:
+#         return "action_user_submit"
+#
+#     def run(
+#         self,
+#         dispatcher,
+#         tracker: Tracker,
+#         domain: "DomainDict",
+#     ) -> List[Dict[Text, Any]]:
+#         dispatcher.utter_message(template="utter_user_details_thanks",
+#                                  Name=tracker.get_slot("name"),
+#                                  Mobile_number=tracker.get_slot("number"),
+#                                  Address=tracker.get_slot("address"),
+#                                  Email=tracker.get_slot("email")
+#                                  # ,RegistrationNumber=tracker.get_slot("registration_number")
+#                                  )
+
+
+class ActionResetAllSlots(Action):
+    def name(self):
+        return "action_reset_all_slots"
+
+    def run(self, dispatcher, tracker, domain):
+        return [AllSlotsReset()]
+
+
+class SaveDoctorData(Action):
+    """ This action class allows to save Doctor's data"""
 
     def name(self) -> Text:
-        """Unique identifier of the action"""
-        return "find_patient_options"
+        return "save_doctor_data"
 
     def run(
             self,
-            dispatcher: "CollectingDispatcher",
+            dispatcher,
             tracker: Tracker,
-            domain: "DomainDict") -> List[Dict[Text, Any]]:
-        buttons = [
-            {'payload': '/patient_signup{"content_type":"patient_signup"}', 'title': 'Patient Signup'},
-            {'payload': '/patient_signin{"content_type":"patient_signin"}', 'title': 'Patient Signin'}
-        ]
+            domain: "DomainDict",
+    ) -> List[Dict[Text, Any]]:
+        name = tracker.get_slot("name")
+        number = tracker.get_slot("number")
+        address = tracker.get_slot("address")
+        email = tracker.get_slot("email")
+        medicalRegistrationNumber = tracker.get_slot("medical_registration_number")
+        password = tracker.get_slot("password")
+        dbloader.insertDoctorData(name, number, address, email, medicalRegistrationNumber, password)
+        dispatcher.utter_message(text="Thanks for your registration. {}".format(name))
+        print("Doctor Registration Data Saved to DB")
+        return ["Thanks for your registration. {}".format(name)]
 
-        # TODO: update rasa core version for configurable `button_type`
-        dispatcher.utter_button_template("Patient Login Options",buttons, tracker)
-        return []
 
+class SavePatientsData(Action):
+    """ This action class allows to save Doctor's data"""
+
+    def name(self) -> Text:
+        return "save_patient_data"
+
+    def run(
+            self,
+            dispatcher,
+            tracker: Tracker,
+            domain: "DomainDict",
+    ) -> List[Dict[Text, Any]]:
+        name = tracker.get_slot("name")
+        number = tracker.get_slot("number")
+        address = tracker.get_slot("address")
+        email = tracker.get_slot("email")
+        password = tracker.get_slot("password")
+        dbloader.insertPatientData(name, number, address, email, password)
+        dispatcher.utter_message(text="Thanks for your registration. {}".format(name))
+        print("Patient Registration Data Saved to DB")
+        return ["Thanks for your registration. {}".format(name)]
+
+
+class RetrieveDoctorData(Action):
+    """ This action class allows to retrieve Doctor's data"""
+
+    def name(self) -> Text:
+        return "retrieve_doctor_data"
+
+    def run(
+            self,
+            dispatcher,
+            tracker: Tracker,
+            domain: "DomainDict",
+    ) -> List[Dict[Text, Any]]:
+        email = tracker.get_slot("email")
+        doctorData = dbloader.retrieveDoctorDataWithEmail(email)
+        print("doctorData =", doctorData)
+        if doctorData.count()<1:
+            dispatcher.utter_message(text="Doctor, you are not registered. Kindly Register to PetoCare.")
+            return ["Doctor, you are not registered. Kindly Register to PetoCare."]
+        else:
+            dispatcher.utter_message(text="Welcome Doctor! How can I help you?")
+            return ["Welcome Doctor! How can I help you?"]
+
+
+class RetrievePatientsData(Action):
+    """ This action class allows to retrieve Patient's data"""
+
+    def name(self) -> Text:
+        return "retrieve_patient_data"
+
+    def run(
+            self,
+            dispatcher,
+            tracker: Tracker,
+            domain: "DomainDict",
+    ) -> List[Dict[Text, Any]]:
+        email = tracker.get_slot("email")
+        patientData = dbloader.retrievePatientDataWithEmail(email)
+        print("patientData =", patientData)
+        if patientData.count() < 1:
+            dispatcher.utter_message(text="You are not registered. Kindly Register to PetoCare.")
+            return ["You are not registered. Kindly Register to PetoCare."]
+        else:
+            dispatcher.utter_message(text="Welcome Doctor! How can I help you?")
+            return ["Welcome. How can I help you?"]
 
 
 # class FindWelcomeFacilityTypes(Action):
