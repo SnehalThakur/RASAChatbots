@@ -2,10 +2,53 @@ version: "2.0"
 
 stories:
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: find_welcome_petocare_facility_types
+#- story: happy path
+#  steps:
+#  - intent: greet
+#  - action: find_welcome_petocare_facility_types
+
+
+#- story: interactive_story_1
+#  steps:
+#  - intent: greet
+#  - action: find_welcome_petocare_facility_types
+#  - intent: OnlineAppointment
+#  - action: online_appointment_form
+# - form{"name":"online_appointment_form"}
+# - form{"name":"null"}
+
+#- story: interactive_story_1
+#  steps:
+#  - intent: greet
+#  - action: find_welcome_petocare_facility_types
+#  - intent: OnlineAppointment
+#  - action: utter_city_Whichareaarey
+#  - intent: Delhi
+#  - action: utter_dept_Youarelooking
+#  - intent: Dermatalogy
+#  - action: utter_dept_Herearethedoc
+#  - action: utter_dept_doct_Pleasesele
+#  - intent: JustinaPetraityte
+#  - action: utter_time_Whendoyoupref
+#  - intent: Today
+#  - action: utter_visit_Areyouvisitin
+#  - intent: FirstVisit
+#  - action: utter_option_Areyoualread
+#  - intent: Yes
+#  - action: utter_information_Whatisy
+#  - intent: name
+#  - action: utter_information_Yourmobi
+#  - intent: mobile_number
+#  - action: utter_information_Andwhat
+#  - intent: information
+#  - action: utter_information_Pleasese
+#  - intent: Male
+#  - action: utter_information_Finally
+#  - intent: information
+#  - action: utter_goodbye_Youwillsoon
+#  - action: utter_goodbye_Haveagreat
+#  - action: utter_goodbye
+
 
 - story: interactive_story_1
   steps:
@@ -23,6 +66,13 @@ stories:
   - slot_was_set:
       - content_type: patient
   - action: find_patient_options
+  - intent: OnlineAppointment
+    entities:
+      - content_type: OnlineAppointment
+  - slot_was_set:
+      - content_type: OnlineAppointment
+  - action: online_appointment_form
+  - action: utter_appointment_thanks
 #  - intent: doctor_signup
 #    entities:
 #      - content_type: "doctor_signup"
@@ -127,12 +177,12 @@ stories:
   - action: retrieve_patient_data
 
 
-- story: Appointment Book
-  steps:
-  - intent: appointment_booking
-  - action: utter_ask_location
-  - intent: patient_location
-  - action:
+#- story: Appointment Book
+#  steps:
+#  - intent: appointment_booking
+#  - action: utter_ask_location
+#  - intent: patient_location
+#  - action: utter_ask_affirm
 #
 #- story: ngo flow
 #  steps:

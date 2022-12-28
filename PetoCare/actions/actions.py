@@ -4,12 +4,15 @@
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
 
-from typing import Any, Text, Dict, List
+from typing import Any, Text, Dict, List, Union
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet, EventType, AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 import utils.SQLiteDB as dbloader
+from rasa_sdk.forms import FormAction
+import requests
+import random
 
 FACILITY_TYPES = {
     "hospital":
@@ -29,6 +32,41 @@ FACILITY_TYPES = {
         }
 }
 
+DOCTORS_LIST = {
+    "/DrYogitaGame":
+        {
+            "doctorName": "Dr. Yogita Game",
+            "doctorNumber": "8669416075",
+            "doctorAddress": "Near Alankar Cinema, North Ambazari Road, S Ambazari Rd, Dharampeth, Nagpur, Maharashtra 440010",
+            "doctorEmail": "yogita.game@gmail.com",
+            "experience": "5"
+        },
+    "/DrKaislashMarwah":
+        {
+            "doctorName": "Dr. Kailash Marwah",
+            "doctorNumber": "9421887656",
+            "doctorAddress": "Mandar Flats, N Bazar Rd, Shivaji Nagar, Nagpur, Maharashtra 440010",
+            "doctorEmail": "kailash.marwah@gmail.com",
+            "experience": "7"
+        },
+    "/DrRushikeshDhote":
+        {
+            "doctorName": "Dr. Rushikesh Dhote",
+            "doctorNumber": "8530426407",
+            "doctorAddress": "B/No. 77, Matoshree, Lane 4, Katol Rd, KT Nagar, Nagpur, Maharashtra 440013",
+            "doctorEmail": "rushikesh.dhote@gmail.com",
+            "experience": "10"
+        },
+    "/DrPrabhuRaut":
+        {
+            "doctorName": "Dr. Prabhu Raut",
+            "doctorNumber": "7620695473",
+            "doctorAddress": "52GW+X7F, Katol Road, Friends Colony, beside State Bank Of Indian, Nagpur, Maharashtra 440013",
+            "doctorEmail": "prabhu.raut@gmail.com",
+            "experience": "8"
+        }
+}
+
 
 class FindFacilityTypes(Action):
     """
@@ -45,8 +83,9 @@ class FindFacilityTypes(Action):
             tracker: Tracker,
             domain: "DomainDict") -> List[Dict[Text, Any]]:
         buttons = [
-            {'payload': '/hospital{"content_type":"hospital"}', 'title': 'Hospital'},
-            {'payload': '/ngo{"content_type":"ngo"}', 'title': 'NGO'}
+            {'payload': '/OnlineAppointment{"content_type":"OnlineAppointment"}', 'title': '📅 Appointment Booking'},
+            {'payload': '/hospital{"content_type":"hospital"}', 'title': '🏥 Hospital'},
+            {'payload': '/ngo{"content_type":"ngo"}', 'title': '🏠 NGO'}
             # ,{'payload': '/petshop{"content_type":"petshop"}', 'title': "Pet Shop (Service isn't available)"}
         ]
         # TODO: update rasa core version for configurable `button_type`
@@ -280,7 +319,7 @@ class RetrieveDoctorData(Action):
         email = tracker.get_slot("email")
         doctorData = dbloader.retrieveDoctorDataWithEmail(email)
         print("doctorData =", doctorData)
-        if doctorData.count()<1:
+        if doctorData.count() < 1:
             dispatcher.utter_message(text="Doctor, you are not registered. Kindly Register to PetoCare.")
             return ["Doctor, you are not registered. Kindly Register to PetoCare."]
         else:
@@ -339,3 +378,70 @@ class RetrievePatientsData(Action):
 #         # TODO: update rasa core version for configurable `button_type`
 #         dispatcher.utter_button_template("utter_welcome_bot", buttons, tracker)
 #         return []
+
+
+class AppointmentForms(FormAction):
+    def name(self):
+        return "online_appointment_form"
+
+    def required_slots(self, tracker) -> List[Text]:
+        return ["name", "number", "address", "email", "petType", "petAge", "appointmentDate", "doctorName"]
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        return {
+            "name": [
+                self.from_text(),
+            ],
+            "number": [
+                self.from_text(),
+            ],
+
+            "address": [
+                self.from_text(),
+            ],
+            "email": [
+                self.from_text(),
+            ],
+            "petType": [
+                self.from_text(),
+            ],
+            "petAge": [
+                self.from_text(),
+            ],
+            "appointmentDate": [
+                self.from_text(),
+            ],
+            "doctorName": [
+                self.from_text(),
+            ],
+        }
+
+    def submit(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        print("tracker.get_slot('name') = ",tracker.get_slot("name"))
+        print("tracker.get_slot('number') = ",tracker.get_slot("number"))
+        print("tracker.get_slot('address') = ",tracker.get_slot("address"))
+        print("tracker.get_slot('email') = ",tracker.get_slot("email"))
+        print("tracker.get_slot('petType') = ",tracker.get_slot("petType"))
+        print("tracker.get_slot('petAge') = ",tracker.get_slot("petAge"))
+        print("tracker.get_slot('appointmentDate') = ",tracker.get_slot("appointmentDate"))
+        print("tracker.get_slot('doctorName') = ",tracker.get_slot("doctorName"))
+        print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorName'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorName"])
+        print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorNumber'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorNumber"])
+        print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorAddress'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorAddress"])
+        print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorEmail'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorEmail"])
+        dispatcher.utter_message("❤️❤️❤️Thank you so much for showing your interest in PetoCare")
+        dbloader.insertAppointmentData(tracker.get_slot("name"), tracker.get_slot("number"),
+                                       tracker.get_slot("address"), tracker.get_slot("email"),
+                                       tracker.get_slot("petType"), tracker.get_slot("petAge"),
+                                       tracker.get_slot("appointmentDate"),
+                                       # tracker.get_slot("doctorName"),
+                                       DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorName"],
+                                       DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorNumber"],
+                                       DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorAddress"],
+                                       DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorEmail"])
+        return []

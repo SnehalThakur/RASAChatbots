@@ -7,13 +7,14 @@ To start ngrok server :
 To start action server :
     rasa run actions
 
-TO start rasa :
-    rasa run --enable-api --cors "*"
+To start rasa :
+    rasa run --enable-api --cors "*" -vv
 
 Welcome Flow
 ----------------
 B - Hey! I am a PetoCare Bot. How can I help you?
-	- Hospital
+	- Quick Appointment Booking
+    - Hospital
 	- Pet Shop (Service isn't available)
 	- NGO 
 (User will select Hospital/ Pet Shop/ NGO from above options)

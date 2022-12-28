@@ -29,6 +29,52 @@ intents:
 - email
 - appointment_booking
 - patient_location
+- manewada
+- chatrapati_sqr
+- laxmi_sqr
+- hingna
+- feedback_rate
+- feedback_info
+- No
+- Nope
+- FeedBack
+#- Morethan15min
+#- YesOnTime
+#- Ontime
+- information
+- Yes
+#- Kolkata
+- OnlineAppointment
+#- WithinNext7Days
+#- MohdSarfarazKhan
+- FollowupVisit
+#- Female
+#- GeneralSurgery
+#- Male
+#- Lucknow
+#- Orthopedics
+#- JustinaPetraityte
+#- Dermatalogy
+- FirstVisit
+- Today
+- Tomorrow
+#- Delhi
+- NotSure
+#- Nagpur
+#- WithinNext14Days
+#- Agra
+#- RohitSharma
+#- JamesSmith
+- location
+#- Morethan1hour
+- Skip
+#- Morethan30min
+- other_info
+- DrYogitaGame
+- DrKaislashMarwah
+- DrRushikeshDhote
+- DrPrabhuRaut
+- appointmentDate
 entities:
 - address
 - content_type
@@ -37,6 +83,9 @@ entities:
 - name
 - password
 - email
+- location
+- information
+- rating
 slots:
   content_type:
     type: text
@@ -60,6 +109,27 @@ slots:
     type: text
     influence_conversation: true
   location:
+    type: text
+    influence_conversation: true
+  petType:
+    type: text
+    influence_conversation: true
+  petAge:
+    type: text
+    influence_conversation: true
+  appointmentDate:
+    type: text
+    influence_conversation: true
+  doctorName:
+    type: text
+    influence_conversation: true
+  doctorNumber:
+    type: text
+    influence_conversation: true
+  doctorAddress:
+    type: text
+    influence_conversation: true
+  doctorEmail:
     type: text
     influence_conversation: true
 responses:
@@ -139,6 +209,176 @@ responses:
   - text: Please tell the location where you want to book an appointment.
   utter_ask_affirm:
   - text: Do you want to confirm your booking?
+  utter_area_Whichareaarey:
+    - text: Which area are you looking for the Hospital in?
+      buttons:
+        - payload: /manewada
+          title: Manewada
+        - payload: /chatrapati_sqr
+          title: Chatrapati Square
+        - payload: /laxmi_sqr
+          title: Laxmi Square
+        - payload: /hingna
+          title: Hingna
+
+#  utter_city_Whichareaarey:
+#    - text: Which area are you looking for the Hospital in?
+#      buttons:
+#        - payload: /Delhi
+#          title: Delhi
+#        - payload: /Lucknow
+#          title: Lucknow
+#        - payload: /Kolkata
+#          title: Kolkata
+#        - payload: /Agra
+#          title: Agra
+#  utter_dept_Herearethedoc:
+#  - text: Here are the doctors in that department 👇
+#  utter_dept_Youarelooking:
+#  - buttons:
+#    - payload: /Dermatalogy
+#      title: Dermatalogy
+#    - payload: /Orthopedics
+#      title: Orthopedics
+#    - payload: /GeneralSurgery
+#      title: General Surgery
+#    - payload: /NotSure
+#      title: Not Sure
+#    text: You are looking for a doctor in which department?
+#  utter_dept_doct_Pleasesele:
+#  - text: Please select the doctor you would like to 😊
+#    buttons:
+#    - payload: /JustinaPetraityte
+#      title: Justina Petraityte
+#    - payload: /MohdSarfarazKhan
+#      title: Mohd Sarfaraz Khan
+#    - payload: /JamesSmith
+#      title: James Smith
+#    - payload: /RohitSharma
+#      title: Rohit Sharma
+#
+#  utter_feedback_Wedloveto:
+#  - text: We'd love to know about your Medical Health Care experience
+#  utter_feedback_info_Canyou:
+#  - text: Can you please share your email address so that we can share your feedback
+#      with the doctor too.
+#  utter_feedback_info_Wouldy:
+#  - text: Would you recommend Medi Health Care to your friends and family?
+#  utter_feedback_option_Youa:
+#  - text: You are able to meet the doctor?
+#    buttons:
+#    - payload: /YesOnTime
+#      title: Yes On Time
+#    - payload: /Nope
+#      title: Nope
+#  utter_feedback_rate_Rateyo:
+#  - text: Rate your appointment experience with the clinic between 1 to 10?
+#  utter_feedback_time_Howmuc:
+#  - text: How much time did you have to wait at the doctor’s place?
+#    buttons:
+#    - payload: /Ontime
+#      title: On time
+#    - payload: /Morethan15min
+#      title: More than 15 min
+#    - payload: /Morethan30min
+#      title: More than 30 min
+#    - payload: /Morethan1hour
+#      title: More than 1 hour
+
+#  utter_goodbye_Haveagreat:
+#  - text: Have a great day
+#  utter_goodbye_Youwillsoon:
+#  - text: You will soon hear back from our team
+#  utter_greet_HiWelcometo:
+#  - text: Hi! Welcome to Medical health care .
+#  utter_greet_Requesttosche:
+#  - text: Request to schedule an appointment with our expert consultants.
+#  utter_information_Andwhat:
+#  - text: And what's your date of birth?
+  utter_information_Finally:
+  - text: Finally, your email address
+#  utter_information_Pleasese:
+#  - buttons:
+#    - payload: /Male
+#      title: Male
+#    - payload: /Female
+#      title: Female
+#    text: Please select your gender 👇
+#  utter_information_Whatisy:
+#  - text: What is your full name?
+#  utter_information_Yourmobi:
+#  - text: Your mobile number?
+#  utter_option_Areyoualread:
+#  - buttons:
+#    - payload: /Yes
+#      title: 'Yes'
+#    - payload: /No
+#      title: 'No'
+#    text: Are you already registered with us?
+#  utter_other_info_Doyouhav:
+#  - text: Do you have any comments/messages about the appointment? Please give them
+#      here 👇
+#  utter_other_info_Youcansk:
+#  - buttons:
+#    - payload: /Skip
+#      title: Skip
+#    text: You can skip this by clicking on Skip button
+#  utter_time_Whendoyoupref:
+#  - buttons:
+#    - payload: /Today
+#      title: Today
+#    - payload: /Tomorrow
+#      title: Tomorrow
+#    - payload: /WithinNext7Days
+#      title: Within Next 7 Days
+#    - payload: /WithinNext14Days
+#      title: Within Next 14 Days
+#    text: When do you prefer to meet the doctor?
+#  utter_visit_Areyouvisitin:
+#  - buttons:
+#    - payload: /FirstVisit
+#      title: First Visit
+#    - payload: /FollowupVisit
+#      title: Follow-up-Visit
+#    text: Are you visiting for the first time, or is it a follow-up visit?
+  utter_ask_petType:
+    - buttons:
+        - payload: "🐈 Cat"
+          title: "cat"
+        - payload: "🐕 Dog "
+          title: "dog"
+      text: "Select your pet type?"
+  utter_ask_doctorName:
+  - text: Please select the doctor you would like to 😊 (Time-10am to 12pm, 7pm to 9pm)
+    buttons:
+    - payload: /DrYogitaGame
+      title: Dr Yogita Game
+    - payload: /DrKaislashMarwah
+      title: Dr Kaislash Marwah
+    - payload: /DrRushikeshDhote
+      title: Dr Rushikesh Dhote
+    - payload: /DrPrabhuRaut
+      title: Dr Prabhu Raut
+  utter_ask_petAge:
+  - text: "What is the age of your pet?"
+  utter_ask_appointmentDate:
+  - buttons:
+    - payload: /Today
+      title: Today
+    - payload: /Tomorrow
+      title: Tomorrow
+    text: When do you prefer to meet the doctor?
+  utter_appointment_thanks:
+    - text: |-
+        Thanks for providing the given details 
+        Name: {name},
+        Number: {number},
+        Address: {address},
+        Email: {email},
+        PetType: {petType},
+        PetAge: {petAge},
+        AppointmentDate: {appointmentDate},
+        DoctorName: {doctorName}
 actions:
 - action_user_submit
 - find_doctor_options
@@ -151,7 +391,38 @@ actions:
 - save_patient_data
 - retrieve_doctor_data
 - retrieve_patient_data
+- utter_cheer_up
+- utter_goodbye
+- utter_greet
+- utter_happy
+- online_appointment_form
 forms:
+  online_appointment_form:
+    required_slots:
+      name:
+      - type: from_text
+        intent: name
+      number:
+      - type: from_text
+        intent: number
+      address:
+      - type: from_text
+        intent: address
+      email:
+      - type: from_text
+        intent: email
+      petType:
+      - type: from_text
+        intent: petType
+      petAge:
+      - type: from_text
+        intent: petAge
+      date:
+      - type: from_text
+        intent: date
+      doctorName:
+      - type: from_text
+        intent: doctorName
   patient_details_form:
     required_slots:
       name:

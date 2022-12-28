@@ -17,7 +17,6 @@ nlu:
     - good afternoon
 - intent: goodbye
   examples: |
-    - good afternoon
     - cu
     - good by
     - cee you later
@@ -28,7 +27,6 @@ nlu:
     - see you around
     - bye bye
     - see you later
-    - 99705ccdd0
 - intent: affirm
   examples: |
     - yes
@@ -109,15 +107,19 @@ nlu:
 - intent: doctor_signup
   examples: |
     - [doctor_signup](content_type)
+    - [doctorSignup](content_type)
 - intent: doctor_signin
   examples: |
     - [doctor_signin](content_type)
+    - [doctorSignin](content_type)
 - intent: patient_signup
   examples: |
     - [patient_signup](content_type)
+    - [patientSignup](content_type)
 - intent: patient_signin
   examples: |
     - [patient_signin](content_type)
+    - [patientSignin](content_type)
 - intent: petcare_user
   examples: |
     - I am [petcare_user](content_type)
@@ -161,7 +163,7 @@ nlu:
   examples: |
     - my email id is [thakurvaishnavi@gmail.com](email)
     - [vaishnavithakur@gmail.com](email)
-- intent: appointment_booking
+- intent: OnlineAppointment
   examples: |
     - I want to book an appointment
     - I want an appointment
@@ -175,3 +177,231 @@ nlu:
     - I want to book in [Hingna](location)
     - I want to book in [T-Point](location)
     - I want to book in [Ambazari](location)
+
+#- intent: Agra
+#  examples: |
+#    - /Agra
+#    - /agra
+#
+#- intent: Delhi
+#  examples: |
+#    - /Delhi
+#    - /delhi
+#
+#- intent: Dermatalogy
+#  examples: |
+#    - /Dermatalogy
+#    - /dermatalogy
+
+- intent: FeedBack
+  examples: |
+    - /FeedBack
+    - /feedBack
+
+#- intent: Female
+#  examples: |
+#    - /Female
+#    - /female
+
+- intent: FirstVisit
+  examples: |
+    - /FirstVisit
+    - /firstVisit
+
+- intent: FollowupVisit
+  examples: |
+    - /FollowupVisit
+    - /followupVisit
+
+#- intent: GeneralSurgery
+#  examples: |
+#    - /GeneralSurgery
+#    - /generalSurgery
+#
+#- intent: JamesSmith
+#  examples: |
+#    - /JamesSmith
+#    - /jamesSmith
+#
+#- intent: JustinaPetraityte
+#  examples: |
+#    - /JustinaPetraityte
+#    - /justinaPetraityte
+
+- intent: DrYogitaGame
+  examples: |
+    - /DrYogitaGame
+    - /DrYogitaGame
+
+- intent: DrKaislashMarwah
+  examples: |
+    - /DrKaislashMarwah
+    - /DrKaislashMarwah
+
+- intent: DrRushikeshDhote
+  examples: |
+    - /DrRushikeshDhote
+    - /DrRushikeshDhote
+
+- intent: DrPrabhuRaut
+  examples: |
+    - /DrPrabhuRaut
+    - /DrPrabhuRaut
+
+#- intent: Kolkata
+#  examples: |
+#    - /Kolkata
+#    - /kolkata
+
+
+#- intent: Nagpur
+#  examples: |
+#    - /Nagpur
+#    - /Nagpur
+
+#- intent: Lucknow
+#  examples: |
+#    - /Lucknow
+#    - /lucknow
+
+#- intent: Male
+#  examples: |
+#    - /Male
+#    - /male
+
+#- intent: MohdSarfarazKhan
+#  examples: |
+#    - /MohdSarfarazKhan
+#    - /mohdSarfarazKhan
+
+#- intent: Morethan15min
+#  examples: |
+#    - /Morethan15min
+#    - /morethan15min
+
+#- intent: No
+#  examples: |
+#    - /No
+#    - /no
+#    - no
+
+- intent: Nope
+  examples: |
+    - /Nope
+    - /nope
+
+- intent: NotSure
+  examples: |
+    - /NotSure
+    - /notSure
+
+- intent: OnlineAppointment
+  examples: |
+    - /OnlineAppointment
+    - /onlineAppointment
+
+#- intent: Ontime
+#  examples: |
+#    - /Ontime
+#    - /ontime
+#
+#- intent: Orthopedics
+#  examples: |
+#    - /Orthopedics
+#    - /orthopedics
+#
+#- intent: RohitSharma
+#  examples: |
+#    - /RohitSharma
+#    - /rohitSharma
+
+- intent: Today
+  examples: |
+    - /Today
+    - /today
+
+- intent: Tomorrow
+  examples: |
+    - /Tomorrow
+    - /tomorrow
+
+#- intent: WithinNext14Days
+#  examples: |
+#    - /WithinNext14Days
+#    - /withinNext14Days
+#
+#- intent: WithinNext7Days
+#  examples: |
+#    - /WithinNext7Days
+#    - /withinNext7Days
+
+#- intent: Yes
+#  examples: |
+#    - /Yes
+#    - /yes
+#    - yes
+
+#- intent: YesOnTime
+#  examples: |
+#    - /YesOnTime
+#    - /yesOnTime
+#    - /yesontime
+
+- intent: feedback_info
+  examples: |
+    - abc@xyz
+    - [abc@xyzz](email)
+
+- intent: feedback_rate
+  examples: |
+    - 10
+    - [5](rating)
+    - [10](rating)
+
+- intent: information
+  examples: |
+    - abc
+    - [1234567890](number)
+    - 22/09/1992
+    - abc@xyz.com
+    - [abc](information)
+    - 1234567890
+    - 26/09/1995
+    - abc@xyz.com
+    - [sarfaraz](information)
+    - [1234567890](number)
+    - 26 september 2019
+    - abc@xyz.com
+    - [rohit](information)
+    - 12345678901
+    - 26/09/1995
+    - abc@xyz.com
+    - [abcd](name)
+    - 9998887765
+    - 12/12/2002
+    - abc@xyz.com
+    - [md sarfaraz](information)
+    - 9998989786
+    - 26/09/1995
+    - abc@xyz.com
+    - [mohd](information)
+    - 1235678998
+    - 26/09/1992
+    - abc@xyz.com
+    - mohd
+    - 1235678998
+    - 26/09/1992
+    - abc@xyz.com
+    - sadf
+    - [1234567890](number)
+    - 2 sept 2012
+    - abc@gmail.com
+    - abc@xyz.com
+
+#- intent: location
+#  examples: |
+#    - /Delhi
+#    - /Lucknow
+#    - /Kolkata
+#    - /Agra
+#    - [Delhi](location)
