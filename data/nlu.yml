@@ -1,0 +1,334 @@
+version: "2.0"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+- intent: welcome_bot
+  examples: |
+    - welcome bot
+    - welcome_bot
+- intent: hospital
+  examples: |
+    - I want [hospital](content_type)
+    - I want to know about [hospital](content_type)
+- intent: ngo
+  examples: |
+    - I want [ngo](content_type)
+    - I want to know about [ngo](content_type)
+- intent: doctor
+  examples: |
+    - I am a [doctor](content_type)
+    - I am [doctor](content_type)
+    - [doctor](content_type)
+- intent: patient
+  examples: |
+    - I am [patient](content_type)
+    - I am a [patient](content_type)
+    - [patient](content_type)
+- intent: doctor_signup
+  examples: |
+    - [doctor_signup](content_type)
+    - [doctorSignup](content_type)
+- intent: doctor_signin
+  examples: |
+    - [doctor_signin](content_type)
+    - [doctorSignin](content_type)
+- intent: patient_signup
+  examples: |
+    - [patient_signup](content_type)
+    - [patientSignup](content_type)
+- intent: patient_signin
+  examples: |
+    - [patient_signin](content_type)
+    - [patientSignin](content_type)
+- intent: petcare_user
+  examples: |
+    - I am [petcare_user](content_type)
+    - [petcare_user](content_type)
+- intent: tell_name
+  examples: |
+    - what is your name?
+    - tell me your name?
+    - what should I call you?
+- intent: name
+  examples: |
+    - My name is [vaishnavi](name)
+    - [Vaishnavi](name)
+    - [Vaishnavi](name) is my name
+    - My name is [ishita](name)
+    - My name is [isha](name)
+    - People call me [Vaishnavi](name)
+    - sonu
+    - Sonu
+- intent: mobile_number
+  examples: |
+    - my number is [8530695473](number)
+    - [8530426407](number)
+    - my mobile number is [8669416075](number)
+    - [9421887656](number) is my number
+    - [9970533440](number)
+- intent: password
+  examples: |
+    - [99705ccdd0](password)
+    - My password is [99705ccdd0](password)
+    - password [99705ccdd0](password)
+    - [9970CCDD0](password)
+- intent: address
+  examples: |
+    - I live in [Nagpur](address)
+    - [Nagpur](address)
+    - [Manewada](address)
+    - [Hingna](address)
+    - [Nagpur](address)
+- intent: email
+  examples: |
+    - my email id is [thakurvaishnavi@gmail.com](email)
+    - [vaishnavithakur@gmail.com](email)
+- intent: OnlineAppointment
+  examples: |
+    - I want to book an appointment
+    - I want an appointment
+    - I want appointment
+    - I want doctor appointment
+    - I want doctor's appointment
+- intent: patient_location
+  examples: |
+    - I want to book in [Manewada](location)
+    - I want to book in [Medical Square](location)
+    - I want to book in [Hingna](location)
+    - I want to book in [T-Point](location)
+    - I want to book in [Ambazari](location)
+- intent: FeedBack
+  examples: |
+    - /FeedBack
+    - /feedBack
+
+- intent: petType
+  examples: |
+    - dog
+    - cat
+
+- intent: doctorNames
+  examples: |
+    - doc name
+    - doctorName
+    - doctorNames
+    - Doctor Name
+    - doctor name
+
+- intent: doctorNameOption
+  examples: |
+    - [Dr Umar Khan](doctorName)
+    - [Metro Animals Clinic](doctorName)
+    - [Royal Pet Clinic](doctorName)
+    - [Vet Care Centre](doctorName)
+    - [Dr Pradnay Taksande](doctorName)
+
+- intent: petAge
+  examples: |
+    - 1 month
+    - 2 month
+    - 1 year
+    - 2 year
+    - 1.5
+    - 2 
+    
+
+
+
+- intent: FirstVisit
+  examples: |
+    - /FirstVisit
+    - /firstVisit
+
+- intent: FollowupVisit
+  examples: |
+    - /FollowupVisit
+    - /followupVisit
+
+
+- intent: Nope
+  examples: |
+    - /Nope
+    - /nope
+
+- intent: NotSure
+  examples: |
+    - /NotSure
+    - /notSure
+
+- intent: OnlineAppointment
+  examples: |
+    - /OnlineAppointment
+    - /onlineAppointment
+
+
+- intent: Today
+  examples: |
+    - /Today
+    - /today
+
+- intent: Tomorrow
+  examples: |
+    - /Tomorrow
+    - /tomorrow
+
+#- intent: WithinNext14Days
+#  examples: |
+#    - /WithinNext14Days
+#    - /withinNext14Days
+#
+#- intent: WithinNext7Days
+#  examples: |
+#    - /WithinNext7Days
+#    - /withinNext7Days
+
+#- intent: Yes
+#  examples: |
+#    - /Yes
+#    - /yes
+#    - yes
+
+#- intent: YesOnTime
+#  examples: |
+#    - /YesOnTime
+#    - /yesOnTime
+#    - /yesontime
+
+- intent: feedback_info
+  examples: |
+    - abc@xyz
+    - [abc@xyzz](email)
+
+- intent: feedback_rate
+  examples: |
+    - 10
+    - [5](rating)
+    - [10](rating)
+
+- intent: information
+  examples: |
+    - abc
+    - [1234567890](number)
+    - 22/09/1992
+    - abc@xyz.com
+    - [abc](information)
+    - 1234567890
+    - 26/09/1995
+    - abc@xyz.com
+    - [sarfaraz](information)
+    - [1234567890](number)
+    - 26 september 2019
+    - abc@xyz.com
+    - [rohit](information)
+    - 12345678901
+    - 26/09/1995
+    - abc@xyz.com
+    - [abcd](name)
+    - 9998887765
+    - 12/12/2002
+    - abc@xyz.com
+    - [md sarfaraz](information)
+    - 9998989786
+    - 26/09/1995
+    - abc@xyz.com
+    - [mohd](information)
+    - 1235678998
+    - 26/09/1992
+    - abc@xyz.com
+    - mohd
+    - 1235678998
+    - 26/09/1992
+    - abc@xyz.com
+    - sadf
+    - [1234567890](number)
+    - 2 sept 2012
+    - abc@gmail.com
+    - abc@xyz.com
+
+#- intent: location
+#  examples: |
+#    - /Delhi
+#    - /Lucknow
+#    - /Kolkata
+#    - /Agra
+#    - [Delhi](location)

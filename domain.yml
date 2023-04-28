@@ -1,0 +1,367 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- patient
+- password
+- mobile_number
+- stop
+- hospital
+- name
+- address
+- goodbye
+- affirm
+- deny
+- mood_great
+- mood_unhappy
+- bot_challenge
+- welcome_bot
+- ngo
+- doctor
+- doctor_signup
+- doctor_signin
+- patient_signup
+- patient_signin
+- petcare_user
+- tell_name
+- email
+- appointment_booking
+- patient_location
+- manewada
+- chatrapati_sqr
+- laxmi_sqr
+- hingna
+- feedback_rate
+- feedback_info
+- No
+- Nope
+- FeedBack
+- information
+- Yes
+- OnlineAppointment
+- FollowupVisit
+- FirstVisit
+- Today
+- Tomorrow
+- NotSure
+- location
+- Skip
+- other_info
+- appointmentDate
+- petAge
+- petType
+- doctorName
+- doctorNames
+- doctorNameOption
+entities:
+- address
+- content_type
+- medical_registration_number
+- mobile_number
+- number
+- name
+- password
+- email
+- location
+- information
+- rating
+- doctorNameOption
+slots:
+  content_type:
+    type: text
+    influence_conversation: true
+  name:
+    type: text
+    influence_conversation: true
+  password:
+    type: text
+    influence_conversation: true
+  number:
+    type: text
+    influence_conversation: true
+  address:
+    type: text
+    influence_conversation: true
+  email:
+    type: text
+    influence_conversation: true
+
+  medical_registration_number:
+    type: text
+    influence_conversation: true
+  location:
+    type: text
+    influence_conversation: true
+  petType:
+    type: text
+    influence_conversation: true
+  petAge:
+    type: text
+    influence_conversation: true
+  appointmentDate:
+    type: text
+    influence_conversation: true
+  doctorName:
+    type: text
+    influence_conversation: true
+  doctorNameOption:
+    type: text
+    influence_conversation: true
+#    mappings:
+#      - type: custom
+#        action: doctorNameFromDB
+  doctorNumber:
+    type: text
+    influence_conversation: true
+  doctorAddress:
+    type: text
+    influence_conversation: true
+  doctorEmail:
+    type: text
+    influence_conversation: true
+responses:
+  utter_greet:
+  - text: Hey! How are you?
+  utter_cheer_up:
+  - image: https://i.imgur.com/nGF1K8f.jpg
+    text: 'Here is something to cheer you up:'
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_ask_more_help:
+  - text: Do you need more help?
+  utter_happy:
+  - text: Great, carry on!
+  utter_goodbye:
+  - text: Bye
+  utter_bye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_welcome_bot:
+  - text: Hey! I am a PetoCare 🤖 Bot. How can I help you?
+  utter_hospital_options:
+  - text: Are you a Doctor or a Patient?
+  utter_ngo_options:
+  - text: Who are you?
+  utter_doctor_options:
+  - text: Signup for Doctor registration and Signin if you are already registered?
+  utter_patient_options:
+  - text: Signup for Patient registration and Signin if you are already registered?
+  utter_ask_name:
+  - text: What is your name ?
+  utter_ask_number:
+  - text: What is your mobile number ?
+  utter_ask_address:
+  - text: Enter your address ?
+  utter_ask_email:
+  - text: Enter your email ?
+  utter_ask_patient_registration_number:
+  - text: What is patient registration number ?
+  utter_ask_registration_number:
+  - text: What is registration number ?
+  utter_ask_doctor_registration_number:
+  - text: What is doctor registration_number ?
+  utter_ask_password:
+  - text: Enter new password ?
+  utter_ask_ngo_registration_number:
+  - text: What is ngo registration number ?
+  utter_ask_petcare_registration_number:
+  - text: What is petcare registration number ?
+  utter_ask_medical_registration_number:
+  - text: What is your medical registration_number ?
+  utter_name:
+  - text: My name is Innovate Yourself.
+  utter_thanks:
+  - text: Thanks for providing the values.
+  utter_patient_details_thanks:
+  - text: |-
+      Thanks for providing the given details 
+      Name: {name},
+      Password: {password},
+      Mobile Number: {number},
+      Address: {address},
+      Email: {email}
+  utter_doctor_details_thanks:
+  - text: |-
+      Thanks for providing the given details 
+      Name: {name},
+      Password: {password},
+      Mobile Number: {number},
+      Address: {address},
+      Email: {email},
+      MedicalRegistrationNumber: {medical_registration_number}
+  utter_out_of_scope:
+  - text: Sorry, I didn't get what you said. Please rephrase what you said.
+  utter_ask_location:
+  - text: Please tell the location where you want to book an appointment.
+  utter_ask_affirm:
+  - text: Do you want to confirm your booking?
+  utter_area_Whichareaarey:
+    - text: Which area are you looking for the Hospital in?
+      buttons:
+        - payload: /manewada
+          title: Manewada
+        - payload: /chatrapati_sqr
+          title: Chatrapati Square
+        - payload: /laxmi_sqr
+          title: Laxmi Square
+        - payload: /hingna
+          title: Hingna
+
+  utter_information_Finally:
+  - text: Finally, your email address
+#  utter_information_Pleasese:
+#  - buttons:
+#    - payload: /Male
+#      title: Male
+#    - payload: /Female
+#      title: Female
+#    text: Please select your gender 👇
+#  utter_information_Whatisy:
+#  - text: What is your full name?
+#  utter_information_Yourmobi:
+#  - text: Your mobile number?
+#  utter_option_Areyoualread:
+#  - buttons:
+#    - payload: /Yes
+#      title: 'Yes'
+#    - payload: /No
+#      title: 'No'
+#    text: Are you already registered with us?
+#  utter_other_info_Doyouhav:
+#  - text: Do you have any comments/messages about the appointment? Please give them
+#      here 👇
+#  utter_other_info_Youcansk:
+#  - buttons:
+#    - payload: /Skip
+#      title: Skip
+#    text: You can skip this by clicking on Skip button
+#  utter_time_Whendoyoupref:
+#  - buttons:
+#    - payload: /Today
+#      title: Today
+#    - payload: /Tomorrow
+#      title: Tomorrow
+#    - payload: /WithinNext7Days
+#      title: Within Next 7 Days
+#    - payload: /WithinNext14Days
+#      title: Within Next 14 Days
+#    text: When do you prefer to meet the doctor?
+#  utter_visit_Areyouvisitin:
+#  - buttons:
+#    - payload: /FirstVisit
+#      title: First Visit
+#    - payload: /FollowupVisit
+#      title: Follow-up-Visit
+#    text: Are you visiting for the first time, or is it a follow-up visit?
+  utter_ask_petType:
+    - buttons:
+        - payload: "🐈 Cat"
+          title: "cat"
+        - payload: "🐕 Dog "
+          title: "dog"
+      text: "Select your pet type?"
+  utter_ask_petAge:
+  - text: "What is the age of your pet?"
+  utter_ask_doctorNameOption:
+  - text: "Choose your doctor from above list of Doctors"
+  utter_ask_appointmentDate:
+  - buttons:
+    - payload: /Today
+      title: Today
+    - payload: /Tomorrow
+      title: Tomorrow
+    text: When do you prefer to meet the doctor?
+  utter_ask_doctorName:
+  - buttons:
+    - payload: /doctorNames
+      title: doctorNames
+    text: Choose your doctor?
+  utter_appointment_thanks:
+    - text: |-
+        Thanks for providing the given details 
+        Name: {name},
+        Number: {number},
+        Address: {address},
+        Email: {email},
+        PetType: {petType},
+        PetAge: {petAge},
+        AppointmentDate: {appointmentDate},
+        DoctorName: {doctorName}
+actions:
+- action_user_submit
+- find_doctor_options
+- find_hospital_options
+- find_ngo_options
+- find_patient_options
+- find_welcome_petocare_facility_types
+- action_reset_all_slots
+- save_doctor_data
+- save_patient_data
+- retrieve_doctor_data
+- retrieve_patient_data
+- utter_cheer_up
+- utter_goodbye
+- utter_greet
+- utter_happy
+- action_ask_online_appointment_form
+- action_ask_doctorName
+- action_ask_confirm_booking_form
+forms:
+  online_appointment_form:
+    required_slots:
+      name:
+      - type: from_text
+        intent: name
+      number:
+      - type: from_text
+        intent: number
+      address:
+      - type: from_text
+        intent: address
+      email:
+      - type: from_text
+        intent: email
+      petType:
+      - type: from_text
+        intent: petType
+      petAge:
+      - type: from_text
+        intent: petAge
+      appointmentDate:
+      - type: from_text
+        intent: appointmentDate
+      doctorName:
+      - type: from_text
+        intent: doctorName
+      doctorNameOption:
+      - type: from_text
+        intent: doctorNameOption
+  patient_details_form:
+    required_slots:
+      name:
+      - type: from_text
+      number:
+      - type: from_text
+      password:
+      - type: from_text
+      address:
+      - type: from_text
+      email:
+      - type: from_text
+  doctor_details_form:
+    required_slots:
+      name:
+      - type: from_text
+      number:
+      - type: from_text
+      password:
+      - type: from_text
+      address:
+      - type: from_text
+      email:
+      - type: from_text
+      medical_registration_number:
+      - type: from_text
