@@ -10,9 +10,11 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet, EventType, AllSlotsReset, FollowupAction
 from rasa_sdk.executor import CollectingDispatcher
 import utils.SQLiteDB as dbloader
+import utils.fast2SmsService as sms
 from rasa_sdk.forms import FormAction
 import requests
 import random
+from datetime import datetime
 
 FACILITY_TYPES = {
     "hospital":
@@ -49,9 +51,9 @@ class FindFacilityTypes(Action):
             domain: "DomainDict") -> List[Dict[Text, Any]]:
         buttons = [
             {'payload': '/OnlineAppointment{"content_type":"OnlineAppointment"}', 'title': '📅 Appointment Booking'},
-            {'payload': '/hospital{"content_type":"hospital"}', 'title': '🏥 Hospital'},
-            {'payload': '/ngo{"content_type":"ngo"}', 'title': '🏠 NGO'}
-            # ,{'payload': '/petshop{"content_type":"petshop"}', 'title': "Pet Shop (Service isn't available)"}
+            # {'payload': '/hospital{"content_type":"hospital"}', 'title': '🏥 Hospital'},
+            {'payload': '/NGO{"content_type":"NGO"}', 'title': '🏠 NGO'},
+            {'payload': '/PetShop{"content_type":"PetShop"}', 'title': "Pet Shop"}
         ]
         # TODO: update rasa core version for configurable `button_type`
         dispatcher.utter_button_template("utter_welcome_bot", buttons, tracker)
@@ -447,7 +449,6 @@ class AppointmentForms(FormAction):
         print("===== Inside action_ask_online_appointment_form ====")
         print("Fetching data from DB")
         print("address =", address)
-
         doctorNames = dbloader.retrieveLocationDataWithArea(address)
         # dispatcher.utter_objects(doctorNames)
         buttons = []
@@ -466,10 +467,13 @@ class AppointmentForms(FormAction):
             print("docLoc =", docLoc)
             print("loc_cluster =", loc_cluster)
 
-            docNameList.append(str(docCount) + ". " + docName + " , " + area + " ( " + docLoc + ")")
+            docNameList.append(str(docCount) + ". " + docName + " , " + area + " ( " + docLoc + ")" + '\n')
             docCount += 1
 
-            payload = "/inform{\"Doctor Name\": \"" + docName + " , area - " + area + " ,location - " + docLoc + "\"}"
+            # payload = "/doctorNameChoice{\"doctorNameChoice\": \"" + str(docName) + "\"}"
+            payload = "/doctorNameChoice"
+
+            # '/doctorNameChoice{{"doctorNameChoice":"+ entity_value_1", "doctorLocationChoice": "entity_value_2"}}'
 
             print("payload =", payload)
 
@@ -477,27 +481,30 @@ class AppointmentForms(FormAction):
                 {"title": "{}".format(docName.title()),
                  "payload": payload})
 
+        # datetime object containing current date and time
+        now = datetime.now()
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M")
 
-        doctorName = tracker.get_slot('doctorName')
-        print("tracker.get_slot('doctorName') = ", doctorName)
+        print("Storing patient data to table")
+
+        responseText = "Here are the list of doctors 😊 (Time - 10am to 12pm, 7pm to 9pm) \n" + ' \n '.join(
+            [str(elem) for elem in docNameList])
         # TODO: update rasa core version for configurable `button_type`
         # dispatcher.utter_button_template("Please select the doctor you would like to 😊 (Time - 10am to 12pm, 7pm to 9pm)", buttons, tracker)
-        dispatcher.utter_message(text="Please select the doctor you would like to 😊 (Time - 10am to 12pm, 7pm to 9pm)",
-                                 json_message=docNameList)
+        dispatcher.utter_message(text=responseText)
 
-        #
-        # dispatcher.utter_message(template="utter_ask_doctorNameOption")
-        #
-        # doctorNameOption = tracker.get_slot("doctorNameOption")
-        #
-        # print("doctorNameOption =", doctorNameOption)
+        print("Sending confirm SMS")
+        sms.sendSMSToPatient("Your appointment has been scheduled on " + dt_string + " Pet-O-Care")
 
-        # if doctorNameOption != '':
-            # dispatcher.utter_message("❤️❤️❤️Thank you so much for showing your interest in PetoCare", doctorNameOption)
-            # dbloader.insertAppointmentData(patientName, patientNumber, address, email, petType, petAge, appointmentDate, doctorNameOption)
-            # dispatcher.utter_message('Please select the doctor you would like to 😊 (Time-10am to 12pm, 7pm to 9pm)')
-            # print("tracker.get_slot('doctorName') = ", tracker.get_slot("doctorName"))
-            # FollowupAction('doctor_name_from_db')
+        # dispatcher.utter_message(template="utter_ask_doctorNameChoice")
+        dispatcher.utter_message(text="Choose your doctor-", buttons=buttons)
+
+        # dispatcher.utter_message("❤️❤️❤️Thank you so much for showing your interest in PetoCare", doctorNameOption)
+        # dbloader.insertAppointmentData(patientName, patientNumber, address, email, petType, petAge, appointmentDate, doctorNameOption)
+        # dispatcher.utter_message('Please select the doctor you would like to 😊 (Time-10am to 12pm, 7pm to 9pm)')
+        # print("tracker.get_slot('doctorName') = ", tracker.get_slot("doctorName"))
+        # FollowupAction('doctor_name_from_db')
 
         # print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorName'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorName"])
         # print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorNumber'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorNumber"])
@@ -518,16 +525,41 @@ class AppointmentForms(FormAction):
         return []
 
 
-class AppointmentForms(FormAction):
+class NGOForms(FormAction):
     def name(self):
-        return "action_ask_confirm_booking_form"
+        return "action_ask_ngo_form"
 
-    def run(
+    def required_slots(self, tracker) -> List[Text]:
+        return ["name", "number", "address", "email", "petType", "petAge"]
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        return {
+            "name": [
+                self.from_text(),
+            ],
+            "number": [
+                self.from_text(),
+            ],
+            "address": [
+                self.from_text(),
+            ],
+            "email": [
+                self.from_text(),
+            ],
+            "petType": [
+                self.from_text(),
+            ],
+            "petAge": [
+                self.from_text(),
+            ]
+        }
+
+    def submit(
             self,
-            dispatcher: "CollectingDispatcher",
+            dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: "DomainDict",
-    ) -> List[Dict[Text, Any]]:
+            domain: Dict[Text, Any],
+    ) -> List[Dict]:
         patientName = tracker.get_slot("name")
         print("tracker.get_slot('name') = ", patientName)
         patientNumber = tracker.get_slot("number")
@@ -540,38 +572,121 @@ class AppointmentForms(FormAction):
         print("tracker.get_slot('petType') = ", petType)
         petAge = tracker.get_slot("petAge")
         print("tracker.get_slot('petAge') = ", petAge)
-        appointmentDate = tracker.get_slot('appointmentDate')
-        print("tracker.get_slot('appointmentDate') = ", appointmentDate)
 
-        print("===== Inside action_ask_online_appointment_form ====")
+        print("===== Inside action_ask_ngo_form ====")
         print("Fetching data from DB")
         print("address =", address)
+        ngoNames = dbloader.retrieveNGOLocationDataWithArea(address)
+        # dispatcher.utter_objects(doctorNames)
+        buttons = []
+        ngoNameList = []
+        print("doctorNames from action_ask_online_appointment_form =", ngoNames)
+        ngoCount = 1
+        for ngo in ngoNames:
+            # print("doctor =", doctor)
+            ngoName = ngo.get("name")
+            ngoLoc = ngo.get("location")
+            area = ngo.get("area")
+            loc_cluster = ngo.get("loc_cluster")
 
-        doctorName = tracker.get_slot('doctorNameOption')
-        print("tracker.get_slot('doctorNameOption') = ", doctorName)
-        dispatcher.utter_message("❤️❤️❤️Thank you so much for showing your interest in PetoCare")
+            print("ngoName =", ngoName)
+            print("area =", area)
+            print("ngoLoc =", ngoLoc)
+            print("loc_cluster =", loc_cluster)
 
-        # if doctorNameOption != '':
-            # dispatcher.utter_message("❤️❤️❤️Thank you so much for showing your interest in PetoCare", doctorNameOption)
-            # dbloader.insertAppointmentData(patientName, patientNumber, address, email, petType, petAge, appointmentDate, doctorNameOption)
-            # dispatcher.utter_message('Please select the doctor you would like to 😊 (Time-10am to 12pm, 7pm to 9pm)')
-            # print("tracker.get_slot('doctorName') = ", tracker.get_slot("doctorName"))
-            # FollowupAction('doctor_name_from_db')
+            ngoNameList.append(str(ngoCount) + ". " + ngoName + " , " + area + " ( " + ngoLoc + ")" + '\n')
+            ngoCount += 1
 
-        # print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorName'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorName"])
-        # print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorNumber'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorNumber"])
-        # print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorAddress'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorAddress"])
-        # print("DOCTORS_LIST[tracker.get_slot('doctorName')]['doctorEmail'] = ",DOCTORS_LIST[tracker.get_slot("doctorName")]["doctorEmail"])
-        # TODO : change the fields from doctor attributes
-        # dispatcher.utter_message("❤️❤️❤️Thank you so much for showing your interest in PetoCare", doctorNameOption)
-        # dbloader.insertAppointmentData(tracker.get_slot("name"), tracker.get_slot("number"),
-        #                                tracker.get_slot("address"), tracker.get_slot("email"),
-        #                                tracker.get_slot("petType"), tracker.get_slot("petAge"),
-        #                                tracker.get_slot("appointmentDate"),
-        #                                tracker.get_slot("doctorName"),
-        #                                tracker.get_slot("doctorName"),
-        #                                tracker.get_slot("doctorName"),
-        #                                tracker.get_slot("doctorName"),
-        #                                tracker.get_slot("doctorName")
-        #                                )
+            payload = "/inform{\"NGO Name\": \"" + ngoName + " , area - " + area + " ,location - " + ngoLoc + "\"}"
+
+            print("payload =", payload)
+
+            buttons.append(
+                {"title": "{}".format(ngoName.title()),
+                 "payload": payload})
+
+        responseText = "Here are the list of NGO 😊 (Time - 11am to 7pm) \n" + ' \n '.join(
+            [str(elem) for elem in ngoNameList])
+
+        dispatcher.utter_message(text=responseText)
+        # dispatcher.utter_message(text="Here are the list of NGO 😊 (Time - 11am to 7pm)", buttons=buttons)
+
+        return []
+
+
+class PetShopForms(FormAction):
+    def name(self):
+        return "action_ask_pet_shop_form"
+
+    def required_slots(self, tracker) -> List[Text]:
+        return ["name", "number", "address", "email"]
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        return {
+            "name": [
+                self.from_text(),
+            ],
+            "number": [
+                self.from_text(),
+            ],
+            "address": [
+                self.from_text(),
+            ],
+            "email": [
+                self.from_text(),
+            ]
+        }
+
+    def submit(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        patientName = tracker.get_slot("name")
+        print("tracker.get_slot('name') = ", patientName)
+        patientNumber = tracker.get_slot("number")
+        print("tracker.get_slot('number') = ", patientNumber)
+        address = tracker.get_slot("address")
+        print("tracker.get_slot('address') = ", address)
+        email = tracker.get_slot("email")
+        print("tracker.get_slot('email') = ", email)
+
+        print("===== Inside action_ask_pet_shop_form ====")
+        print("Fetching data from DB")
+        print("address =", address)
+        petShopNames = dbloader.retrieveLocationDataWithArea(address)
+        # dispatcher.utter_objects(doctorNames)
+        buttons = []
+        petShopNameList = []
+        print("petShopNames from action_ask_pet_shop_form =", petShopNames)
+        docCount = 1
+        for shop in petShopNames:
+            # print("doctor =", doctor)
+            petShopName = shop.get("name")
+            petShopLoc = shop.get("location")
+            area = shop.get("area")
+            loc_cluster = shop.get("loc_cluster")
+
+            print("petShopName =", petShopName)
+            print("area =", area)
+            print("petShopLoc =", petShopLoc)
+            print("loc_cluster =", loc_cluster)
+
+            petShopNameList.append(str(docCount) + ". " + petShopName + " , " + area + " ( " + petShopLoc + ")" + '\n')
+            docCount += 1
+
+            payload = "/inform{\"Pet Shop Name\": \"" + petShopName + " , area - " + area + " ,location - " + petShopLoc + "\"}"
+
+            print("payload =", payload)
+
+            buttons.append(
+                {"title": "{}".format(petShopName.title()),
+                 "payload": payload})
+
+        responseText = "Here are the list of Pet Shops 😊 (Time - 10am to 9pm) \n" + ' \n '.join(
+            [str(elem) for elem in petShopNameList])
+
+        dispatcher.utter_message(text=responseText)
+
         return []

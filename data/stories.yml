@@ -53,7 +53,52 @@ stories:
 
 
 
+- story: interactive_story_5
+  steps:
+  - intent: greet
+  - action: find_welcome_petocare_facility_types
+  - intent: OnlineAppointment
+    entities:
+      - content_type: OnlineAppointment
+  - slot_was_set:
+      - content_type: OnlineAppointment
+  - action: action_ask_online_appointment_form
+  - intent: doctorNameChoice
+  - action: utter_appointment_confirm_thanks
 
+
+
+- story: interactive_story_3
+  steps:
+  - intent: greet
+  - action: find_welcome_petocare_facility_types
+  - intent: NGO
+    entities:
+      - content_type: NGO
+  - slot_was_set:
+      - content_type: NGO
+  - action: action_ask_ngo_form
+  - action: utter_appointment_thanks_msg
+  - intent: PetShop
+    entities:
+      - content_type: PetShop
+  - slot_was_set:
+      - content_type: PetShop
+  - action: action_ask_pet_shop_form
+  - action: utter_appointment_thanks_msg
+
+
+- story: interactive_story_4
+  steps:
+  - intent: greet
+  - action: find_welcome_petocare_facility_types
+  - intent: PetShop
+    entities:
+      - content_type: PetShop
+  - slot_was_set:
+      - content_type: PetShop
+  - action: action_ask_pet_shop_form
+  - action: utter_appointment_thanks_msg
 
 
 - story: interactive_story_2
@@ -78,9 +123,10 @@ stories:
   - slot_was_set:
       - content_type: OnlineAppointment
   - action: action_ask_online_appointment_form
-  - action: utter_ask_doctorNameOption
-  - intent: doctorNameOption
-  - action: action_ask_confirm_booking_form
+  - intent: doctorNameChoice
+  - action: utter_appointment_confirm_thanks
+
+
 
 
 
@@ -192,7 +238,7 @@ stories:
   - slot_was_set:
       - content_type: "doctor_signin"
   - action: utter_ask_email
-  - action: retrieve_doctor_data
+#  - action: retrieve_doctor_data
 #  - active_loop: doctor_details_form
 #  - action: utter_ask_more_help
 #  - active_loop: null
@@ -225,7 +271,7 @@ stories:
   - slot_was_set:
       - content_type: "patient_signin"
   - action: utter_ask_email
-  - action: retrieve_patient_data
+#  - action: retrieve_patient_data
 
 
 #- story: Appointment Book
@@ -321,3 +367,55 @@ stories:
 
 
 
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: find_welcome_petocare_facility_types
+  - intent: OnlineAppointment
+    entities:
+    - content_type: OnlineAppointment
+  - slot_was_set:
+    - content_type: OnlineAppointment
+  - action: action_ask_online_appointment_form
+  - active_loop: action_ask_online_appointment_form
+  - slot_was_set:
+    - requested_slot: name
+  - slot_was_set:
+    - name: Sonu
+  - slot_was_set:
+    - requested_slot: number
+  - slot_was_set:
+    - number: '9970533440'
+  - slot_was_set:
+    - requested_slot: address
+  - slot_was_set:
+    - address: Wanadongri
+  - slot_was_set:
+    - requested_slot: email
+  - slot_was_set:
+    - email: st@gmail.com
+  - slot_was_set:
+    - requested_slot: petType
+  - slot_was_set:
+    - petType: dog
+  - slot_was_set:
+    - requested_slot: petAge
+  - slot_was_set:
+    - petAge: '16'
+  - slot_was_set:
+    - requested_slot: appointmentDate
+  - slot_was_set:
+    - appointmentDate: Today
+  - slot_was_set:
+    - requested_slot: doctorName
+  - slot_was_set:
+    - doctorName: doctorNames
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - intent: doctorNameChoice
+    entities:
+    - doctorNameChoice: Sai Pet Clinic
+  - action: utter_appointment_confirm_thanks
+  - action: utter_goodbye

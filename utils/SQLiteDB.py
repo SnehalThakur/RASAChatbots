@@ -76,6 +76,41 @@ def createLocationTableIfNotExist():
                         );
                     """)
 
+def createNGOLocationTableIfNotExist():
+    sqlConnection = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\ngoLocationData.db")
+    print(sqlConnection)
+
+    sqlConnection.execute("""
+                        CREATE TABLE IF NOT EXISTS ngolocation (
+                            id integer primary key autoincrement,
+                            name text not null,
+                            area text not null,
+                            city text not null,
+                            location text not null,
+                            longitude text not null,
+                            latitude text not null,
+                            loc_cluster int
+                        );
+                    """)
+
+
+def createPetShopLocationTableIfNotExist():
+    sqlConnection = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\petshopLocationData.db")
+    print(sqlConnection)
+
+    sqlConnection.execute("""
+                        CREATE TABLE IF NOT EXISTS petshoplocation (
+                            id integer primary key autoincrement,
+                            name text not null,
+                            area text not null,
+                            city text not null,
+                            location text not null,
+                            longitude text not null,
+                            latitude text not null,
+                            loc_cluster int
+                        );
+                    """)
+
 
 def loadCsvFileToLocationTbl():
     sqlConnection = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\locationData.db")
@@ -85,7 +120,7 @@ def loadCsvFileToLocationTbl():
     # curs.execute("create table if not exists studentInfo" +
     #              " (name text, gender text, age integer,course text, branch text)")
     # Load CSV data into Pandas DataFrame
-    location = pd.read_csv(r'C:\Users\snehal\PycharmProjects\rasa-chatbot\recommenderSystem\doctors.csv')
+    location = pd.read_csv(r'C:\Users\snehal\PycharmProjects\rasa-chatbot\recommenderSystem\doctorsList.csv')
 
     # Write the data to a sqlite db table
     location.to_sql('location', sqlConnection, if_exists='replace', index=False)
@@ -154,6 +189,181 @@ def retrieveClusterDataWithArea(area):
     loc = cur.fetchall()
     con.close()
     return loc
+
+
+
+
+
+
+def loadCsvFileToNGOLocationTbl():
+    sqlConnection = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\ngoLocationData.db")
+    # Create a cursor object
+    curs = sqlConnection.cursor()
+    # # Run create table sql query
+    # curs.execute("create table if not exists studentInfo" +
+    #              " (name text, gender text, age integer,course text, branch text)")
+    # Load CSV data into Pandas DataFrame
+    location = pd.read_csv(r'C:\Users\snehal\PycharmProjects\rasa-chatbot\recommenderSystem\ngo.csv')
+
+    # Write the data to a sqlite db table
+    location.to_sql('ngolocation', sqlConnection, if_exists='replace', index=False)
+
+    # Run select sql query
+    curs.execute('select * from ngolocation')
+
+    # Fetch all records
+    # as list of tuples
+    records = curs.fetchall()
+
+    # Display result
+    # for row in records:
+    #     # show row
+    #     print(row)
+    # Close connection to SQLite database
+    sqlConnection.close()
+
+
+def retrieveNGOLocationData():
+    con = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\ngoLocationData.db")
+    cur = con.cursor()
+    cur.execute("SELECT * FROM ngolocation")
+    loc = cur.fetchall()
+    con.close()
+    return loc
+
+
+def retrieveNGOLocationDataWithArea(area):
+    con = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\ngoLocationData.db")
+    cur = con.cursor()
+    cur.execute(f"SELECT * FROM ngolocation WHERE area='{area}'")
+    loc = cur.fetchall()
+    locWithCluster = []
+    doctorData_accumulator = []
+    # Display result
+    for row in loc:
+        clinicName = row[0]
+        area = row[1]
+        loc = row[3]
+        cluster = row[6]
+        cur.execute(f"SELECT * FROM ngolocation WHERE loc_cluster='{cluster}'")
+        locWithCluster = cur.fetchall()
+        # print("locWithCluster =", locWithCluster)
+        for item in locWithCluster:
+            name = item[0]
+            area = item[1]
+            city = item[2]
+            location = item[3]
+            longitude = item[4]
+            latitude = item[5]
+            loc_cluster = item[6]
+
+            doctorDataDict = {"name": name, "area": area, "city": city, "location": location,
+                              "longitude": longitude, "latitude": latitude, "loc_cluster": loc_cluster}
+            doctorData_accumulator.append(doctorDataDict)
+        # print("doctorData_accumulator =", doctorData_accumulator)
+    con.close()
+    return doctorData_accumulator
+
+
+def retrieveNGOClusterDataWithArea(area):
+    con = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\ngoLocationData.db")
+    cur = con.cursor()
+    cur.execute(f"SELECT * FROM ngolocation WHERE area='{area}'")
+    loc = cur.fetchall()
+    con.close()
+    return loc
+
+
+
+
+
+
+
+
+
+
+
+def loadCsvFileToPetShopLocationTbl():
+    sqlConnection = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\petshopLocationData.db")
+    # Create a cursor object
+    curs = sqlConnection.cursor()
+    # # Run create table sql query
+    # curs.execute("create table if not exists studentInfo" +
+    #              " (name text, gender text, age integer,course text, branch text)")
+    # Load CSV data into Pandas DataFrame
+    location = pd.read_csv(r'C:\Users\snehal\PycharmProjects\rasa-chatbot\recommenderSystem\petShop.csv')
+
+    # Write the data to a sqlite db table
+    location.to_sql('petshoplocation', sqlConnection, if_exists='replace', index=False)
+
+    # Run select sql query
+    curs.execute('select * from petshoplocation')
+
+    # Fetch all records
+    # as list of tuples
+    records = curs.fetchall()
+
+    # Display result
+    # for row in records:
+    #     # show row
+    #     print(row)
+    # Close connection to SQLite database
+    sqlConnection.close()
+
+
+def retrievePetShopLocationData():
+    con = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\petshopLocationData.db")
+    cur = con.cursor()
+    cur.execute("SELECT * FROM petshoplocation")
+    loc = cur.fetchall()
+    con.close()
+    return loc
+
+
+def retrievePetShopLocationDataWithArea(area):
+    con = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\petshopLocationData.db")
+    cur = con.cursor()
+    cur.execute(f"SELECT * FROM petshoplocation WHERE area='{area}'")
+    loc = cur.fetchall()
+    locWithCluster = []
+    doctorData_accumulator = []
+    # Display result
+    for row in loc:
+        clinicName = row[0]
+        area = row[1]
+        loc = row[3]
+        cluster = row[6]
+        cur.execute(f"SELECT * FROM petshoplocation WHERE loc_cluster='{cluster}'")
+        locWithCluster = cur.fetchall()
+        # print("locWithCluster =", locWithCluster)
+        for item in locWithCluster:
+            name = item[0]
+            area = item[1]
+            city = item[2]
+            location = item[3]
+            longitude = item[4]
+            latitude = item[5]
+            loc_cluster = item[6]
+
+            doctorDataDict = {"name": name, "area": area, "city": city, "location": location,
+                              "longitude": longitude, "latitude": latitude, "loc_cluster": loc_cluster}
+            doctorData_accumulator.append(doctorDataDict)
+        # print("doctorData_accumulator =", doctorData_accumulator)
+    con.close()
+    return doctorData_accumulator
+
+
+def retrievePetShopClusterDataWithArea(area):
+    con = sql.connect(r"C:\Users\snehal\PycharmProjects\rasa-chatbot\utils\SQLiteDB\petshopLocationData.db")
+    cur = con.cursor()
+    cur.execute(f"SELECT * FROM petshoplocation WHERE area='{area}'")
+    loc = cur.fetchall()
+    con.close()
+    return loc
+
+
+
+
 
 
 # cursor = sqlConnection.execute("""SELECT name FROM sqlite_master WHERE type='table';""")
@@ -313,8 +523,20 @@ def showAllTables():
 # createTableIfNotExist()
 # showAllTables()
 # createLocationTableIfNotExist()
-loadCsvFileToLocationTbl()
+# loadCsvFileToLocationTbl()
 # retrieveAppointmentData()
 # print(retrieveLocationData())
 # print(retrieveLocationDataWithArea("Mankapur"))
 # print(retrieveLocationDataWithArea("Laxmi Nagar"))
+
+# createNGOLocationTableIfNotExist()
+# loadCsvFileToNGOLocationTbl()
+# retrieveAppointmentData()
+# print(retrieveNGOLocationData())
+# print(retrieveNGOLocationDataWithArea("Mankapur"))
+
+# createPetShopLocationTableIfNotExist()
+# loadCsvFileToPetShopLocationTbl()
+# retrieveAppointmentData()
+# print(retrievePetShopLocationData())
+# print(retrievePetShopLocationDataWithArea("Mankapur"))

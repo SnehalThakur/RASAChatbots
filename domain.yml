@@ -3,13 +3,22 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
+- petType
+- Today
 - greet
+- feedback_info
+- doctorNameChoice
+- doctorNames
+- name
+- information
+- OnlineAppointment
+- email
+- number
 - patient
 - password
 - mobile_number
 - stop
 - hospital
-- name
 - address
 - goodbye
 - affirm
@@ -26,7 +35,6 @@ intents:
 - patient_signin
 - petcare_user
 - tell_name
-- email
 - appointment_booking
 - patient_location
 - manewada
@@ -34,16 +42,14 @@ intents:
 - laxmi_sqr
 - hingna
 - feedback_rate
-- feedback_info
 - No
 - Nope
 - FeedBack
-- information
 - Yes
-- OnlineAppointment
+- NGO
+- PetShop
 - FollowupVisit
 - FirstVisit
-- Today
 - Tomorrow
 - NotSure
 - location
@@ -51,23 +57,23 @@ intents:
 - other_info
 - appointmentDate
 - petAge
-- petType
 - doctorName
-- doctorNames
 - doctorNameOption
 entities:
 - address
 - content_type
+- doctorLocationChoice
+- doctorNameChoice
+- doctorNameOption
+- email
+- information
+- location
 - medical_registration_number
 - mobile_number
-- number
 - name
+- number
 - password
-- email
-- location
-- information
 - rating
-- doctorNameOption
 slots:
   content_type:
     type: text
@@ -87,7 +93,6 @@ slots:
   email:
     type: text
     influence_conversation: true
-
   medical_registration_number:
     type: text
     influence_conversation: true
@@ -109,9 +114,6 @@ slots:
   doctorNameOption:
     type: text
     influence_conversation: true
-#    mappings:
-#      - type: custom
-#        action: doctorNameFromDB
   doctorNumber:
     type: text
     influence_conversation: true
@@ -199,74 +201,29 @@ responses:
   utter_ask_affirm:
   - text: Do you want to confirm your booking?
   utter_area_Whichareaarey:
-    - text: Which area are you looking for the Hospital in?
-      buttons:
-        - payload: /manewada
-          title: Manewada
-        - payload: /chatrapati_sqr
-          title: Chatrapati Square
-        - payload: /laxmi_sqr
-          title: Laxmi Square
-        - payload: /hingna
-          title: Hingna
-
+  - text: Which area are you looking for the Hospital in?
+    buttons:
+    - payload: /manewada
+      title: Manewada
+    - payload: /chatrapati_sqr
+      title: Chatrapati Square
+    - payload: /laxmi_sqr
+      title: Laxmi Square
+    - payload: /hingna
+      title: Hingna
   utter_information_Finally:
   - text: Finally, your email address
-#  utter_information_Pleasese:
-#  - buttons:
-#    - payload: /Male
-#      title: Male
-#    - payload: /Female
-#      title: Female
-#    text: Please select your gender 👇
-#  utter_information_Whatisy:
-#  - text: What is your full name?
-#  utter_information_Yourmobi:
-#  - text: Your mobile number?
-#  utter_option_Areyoualread:
-#  - buttons:
-#    - payload: /Yes
-#      title: 'Yes'
-#    - payload: /No
-#      title: 'No'
-#    text: Are you already registered with us?
-#  utter_other_info_Doyouhav:
-#  - text: Do you have any comments/messages about the appointment? Please give them
-#      here 👇
-#  utter_other_info_Youcansk:
-#  - buttons:
-#    - payload: /Skip
-#      title: Skip
-#    text: You can skip this by clicking on Skip button
-#  utter_time_Whendoyoupref:
-#  - buttons:
-#    - payload: /Today
-#      title: Today
-#    - payload: /Tomorrow
-#      title: Tomorrow
-#    - payload: /WithinNext7Days
-#      title: Within Next 7 Days
-#    - payload: /WithinNext14Days
-#      title: Within Next 14 Days
-#    text: When do you prefer to meet the doctor?
-#  utter_visit_Areyouvisitin:
-#  - buttons:
-#    - payload: /FirstVisit
-#      title: First Visit
-#    - payload: /FollowupVisit
-#      title: Follow-up-Visit
-#    text: Are you visiting for the first time, or is it a follow-up visit?
   utter_ask_petType:
-    - buttons:
-        - payload: "🐈 Cat"
-          title: "cat"
-        - payload: "🐕 Dog "
-          title: "dog"
-      text: "Select your pet type?"
+  - buttons:
+    - payload: 🐈 Cat
+      title: cat
+    - payload: '🐕 Dog '
+      title: dog
+    text: Select your pet type?
   utter_ask_petAge:
-  - text: "What is the age of your pet?"
+  - text: What is the age of your pet in months?
   utter_ask_doctorNameOption:
-  - text: "Choose your doctor from above list of Doctors"
+  - text: Choose your doctor from above list of Doctors
   utter_ask_appointmentDate:
   - buttons:
     - payload: /Today
@@ -279,36 +236,43 @@ responses:
     - payload: /doctorNames
       title: doctorNames
     text: Choose your doctor?
+  utter_ask_doctorNameChoice:
+  - text: Choose your doctor from above list of Doctors?
+  utter_appointment_confirm_thanks:
+  - text: Thanks for providing the above details. Your appointment has been scheduled. Our representative with call you for the confirmation.
+  utter_appointment_thanks_msg:
+  - text: Thanks for providing the above details. Our representative with call you for the information.
   utter_appointment_thanks:
-    - text: |-
-        Thanks for providing the given details 
-        Name: {name},
-        Number: {number},
-        Address: {address},
-        Email: {email},
-        PetType: {petType},
-        PetAge: {petAge},
-        AppointmentDate: {appointmentDate},
-        DoctorName: {doctorName}
+  - text: |-
+      Thanks for providing the given details 
+      Name: {name},
+      Number: {number},
+      Address: {address},
+      Email: {email},
+      PetType: {petType},
+      PetAge: {petAge},
+      AppointmentDate: {appointmentDate},
 actions:
+- action_ask_doctorName
+- action_ask_ngo_form
+- action_ask_online_appointment_form
+- action_ask_pet_shop_form
+- action_reset_all_slots
 - action_user_submit
 - find_doctor_options
 - find_hospital_options
 - find_ngo_options
 - find_patient_options
 - find_welcome_petocare_facility_types
-- action_reset_all_slots
-- save_doctor_data
-- save_patient_data
 - retrieve_doctor_data
 - retrieve_patient_data
+- save_doctor_data
+- save_patient_data
+- utter_appointment_confirm_thanks
 - utter_cheer_up
 - utter_goodbye
 - utter_greet
 - utter_happy
-- action_ask_online_appointment_form
-- action_ask_doctorName
-- action_ask_confirm_booking_form
 forms:
   online_appointment_form:
     required_slots:

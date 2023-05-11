@@ -146,6 +146,10 @@ nlu:
     - my mobile number is [8669416075](number)
     - [9421887656](number) is my number
     - [9970533440](number)
+- intent: number
+  examples: |
+    - [9970533440](number)
+    - 9970533440
 - intent: password
   examples: |
     - [99705ccdd0](password)
@@ -158,11 +162,11 @@ nlu:
     - [Nagpur](address)
     - [Manewada](address)
     - [Hingna](address)
-    - [Nagpur](address)
 - intent: email
   examples: |
     - my email id is [thakurvaishnavi@gmail.com](email)
     - [vaishnavithakur@gmail.com](email)
+    - st@gmail.com
 - intent: OnlineAppointment
   examples: |
     - I want to book an appointment
@@ -170,6 +174,8 @@ nlu:
     - I want appointment
     - I want doctor appointment
     - I want doctor's appointment
+    - /OnlineAppointment
+    - /onlineAppointment
 - intent: patient_location
   examples: |
     - I want to book in [Manewada](location)
@@ -181,12 +187,10 @@ nlu:
   examples: |
     - /FeedBack
     - /feedBack
-
 - intent: petType
   examples: |
     - dog
     - cat
-
 - intent: doctorNames
   examples: |
     - doc name
@@ -194,15 +198,31 @@ nlu:
     - doctorNames
     - Doctor Name
     - doctor name
-
-- intent: doctorNameOption
+- intent: doctorNameChoice
   examples: |
-    - [Dr Umar Khan](doctorName)
-    - [Metro Animals Clinic](doctorName)
-    - [Royal Pet Clinic](doctorName)
-    - [Vet Care Centre](doctorName)
-    - [Dr Pradnay Taksande](doctorName)
-
+    - I want to book [Metro Animals Clinic](doctorNameChoice)
+    - I want to book an appointment with [Dr. Siraaj Khan's Pet Clinic](doctorNameChoice)
+    - Book [Royal Pet Clinic](doctorNameChoice)
+    - Book an appointment with [Orange City Pet Clinic](doctorNameChoice)
+    - [Dr Prabhu  Raut (friend's Health Clinic)](doctorNameChoice)
+    - [Skyline Small animal Clinic](doctorNameChoice)
+    - [Dr Pradnay Taksande](doctorNameChoice)
+    - [Dr Umar Khan](doctorNameChoice)
+    - [Metro Animals Clinic](doctorNameChoice)
+    - [Royal Pet Clinic](doctorNameChoice)
+    - [Vet Care Centre](doctorNameChoice)
+    - [Real Care Small Animal Clinic - Dr Makarand Dixit](doctorNameChoice)
+    - [Animal Health Care Center](doctorNameChoice)
+    - [Mahi Pets Shop & Clinic](doctorNameChoice)
+    - [Dr Itankar Pet Clinic](doctorNameChoice)
+    - [Dr Dhabale Prakash](doctorNameChoice)
+    - [Pet clinic and accessories](doctorNameChoice)
+    - [Vets World Pet Clinic](doctorNameChoice)
+    - [Petsaccurate](doctorNameChoice)
+    - [Cat and Dog Clinic](doctorNameChoice)
+    - [Dr Kayande Pet Clinic](doctorNameChoice)
+    - [Ashoka Veterinary Pharma Limited](doctorNameChoice)
+    - [Sai Pet Clinic](doctorNameChoice)
 - intent: petAge
   examples: |
     - 1 month
@@ -210,81 +230,42 @@ nlu:
     - 1 year
     - 2 year
     - 1.5
-    - 2 
-    
-
-
-
+    - 2
 - intent: FirstVisit
   examples: |
     - /FirstVisit
     - /firstVisit
-
 - intent: FollowupVisit
   examples: |
     - /FollowupVisit
     - /followupVisit
-
-
 - intent: Nope
   examples: |
     - /Nope
     - /nope
-
 - intent: NotSure
   examples: |
     - /NotSure
     - /notSure
-
-- intent: OnlineAppointment
-  examples: |
-    - /OnlineAppointment
-    - /onlineAppointment
-
-
 - intent: Today
   examples: |
     - /Today
     - /today
-
+    - Today
 - intent: Tomorrow
   examples: |
     - /Tomorrow
     - /tomorrow
-
-#- intent: WithinNext14Days
-#  examples: |
-#    - /WithinNext14Days
-#    - /withinNext14Days
-#
-#- intent: WithinNext7Days
-#  examples: |
-#    - /WithinNext7Days
-#    - /withinNext7Days
-
-#- intent: Yes
-#  examples: |
-#    - /Yes
-#    - /yes
-#    - yes
-
-#- intent: YesOnTime
-#  examples: |
-#    - /YesOnTime
-#    - /yesOnTime
-#    - /yesontime
-
 - intent: feedback_info
   examples: |
     - abc@xyz
     - [abc@xyzz](email)
-
+    - Wanadongri
 - intent: feedback_rate
   examples: |
     - 10
     - [5](rating)
     - [10](rating)
-
 - intent: information
   examples: |
     - abc
@@ -294,41 +275,20 @@ nlu:
     - [abc](information)
     - 1234567890
     - 26/09/1995
-    - abc@xyz.com
     - [sarfaraz](information)
-    - [1234567890](number)
     - 26 september 2019
-    - abc@xyz.com
     - [rohit](information)
     - 12345678901
-    - 26/09/1995
-    - abc@xyz.com
     - [abcd](name)
     - 9998887765
     - 12/12/2002
-    - abc@xyz.com
     - [md sarfaraz](information)
     - 9998989786
-    - 26/09/1995
-    - abc@xyz.com
     - [mohd](information)
     - 1235678998
     - 26/09/1992
-    - abc@xyz.com
     - mohd
-    - 1235678998
-    - 26/09/1992
-    - abc@xyz.com
     - sadf
-    - [1234567890](number)
     - 2 sept 2012
     - abc@gmail.com
-    - abc@xyz.com
-
-#- intent: location
-#  examples: |
-#    - /Delhi
-#    - /Lucknow
-#    - /Kolkata
-#    - /Agra
-#    - [Delhi](location)
+    - 16

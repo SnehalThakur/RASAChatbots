@@ -37,7 +37,17 @@ rules:
 #  # The actions we want to run when the form is submitted.
 #  - action: action_user_submit
 
-- rule: out-of-scope
-  steps:
-  - intent: nlu_fallback
-  - action: utter_out_of_scope
+
+#- rule: Submit form
+#  condition:
+#  # Condition that form is active.
+#  - active_loop: action_ask_online_appointment_form
+#  steps:
+#  # Form is deactivated
+#  - action: action_ask_online_appointment_form
+#  - active_loop: null
+#  - slot_was_set:
+#    - requested_slot: null
+#  # The actions we want to run when the form is submitted.
+#  - action: utter_ask_doctorNameChoice
+#  - action: utter_appointment_thanks
